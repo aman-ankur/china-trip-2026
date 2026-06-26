@@ -1,6 +1,6 @@
 # China Trip 2026 🇨🇳
 
-Interactive travel itinerary for Aman + Needhi's 16-day China adventure.
+Interactive travel itinerary for 16-day China adventure.
 
 **Live site:** [aman-ankur.github.io/china-trip-2026](https://aman-ankur.github.io/china-trip-2026/)
 
