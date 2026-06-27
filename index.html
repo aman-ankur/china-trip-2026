@@ -17,35 +17,37 @@
     }
 
     [data-theme="dark"] {
-      --bg: #0a0a0a;
-      --bg-subtle: #141414;
-      --bg-muted: #1a1a1a;
-      --bg-elevated: #222;
-      --text: #fafafa;
-      --text-secondary: #999;
-      --text-tertiary: #666;
-      --border: #222;
-      --border-hover: #333;
+      --bg: #0c0c0c;
+      --bg-subtle: rgba(255, 255, 255, 0.03);
+      --bg-muted: rgba(255, 255, 255, 0.05);
+      --bg-elevated: rgba(255, 255, 255, 0.06);
+      --text: #f0ede8;
+      --text-secondary: #a8a29e;
+      --text-tertiary: #6b6560;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(255, 255, 255, 0.14);
       --accent: #d4a574;
-      --accent-muted: rgba(212, 165, 116, 0.1);
-      --shadow: 0 1px 2px rgba(0,0,0,0.3);
-      --nav-bg: rgba(10, 10, 10, 0.8);
+      --accent-muted: rgba(212, 165, 116, 0.08);
+      --shadow: 0 1px 3px rgba(0,0,0,0.4);
+      --nav-bg: rgba(12, 12, 12, 0.85);
+      --glow: radial-gradient(ellipse 80% 60% at 50% -20%, rgba(212, 165, 116, 0.06), transparent);
     }
 
     [data-theme="light"] {
-      --bg: #fafafa;
-      --bg-subtle: #f5f5f5;
-      --bg-muted: #f0f0f0;
+      --bg: #faf9f7;
+      --bg-subtle: #f3f1ee;
+      --bg-muted: #eae7e3;
       --bg-elevated: #fff;
-      --text: #111;
-      --text-secondary: #555;
-      --text-tertiary: #888;
-      --border: #e5e5e5;
-      --border-hover: #ccc;
-      --accent: #b8783c;
-      --accent-muted: rgba(184, 120, 60, 0.08);
-      --shadow: 0 1px 3px rgba(0,0,0,0.08);
-      --nav-bg: rgba(250, 250, 250, 0.85);
+      --text: #1a1714;
+      --text-secondary: #5c564f;
+      --text-tertiary: #8c857d;
+      --border: #e8e4df;
+      --border-hover: #d4cfc8;
+      --accent: #a0643a;
+      --accent-muted: rgba(160, 100, 58, 0.06);
+      --shadow: 0 1px 3px rgba(0,0,0,0.06);
+      --nav-bg: rgba(250, 249, 247, 0.88);
+      --glow: none;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -59,6 +61,18 @@
       -webkit-font-smoothing: antialiased;
       font-size: 15px;
       transition: background var(--transition), color var(--transition);
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 100vh;
+      background: var(--glow);
+      pointer-events: none;
+      z-index: -1;
     }
 
     .container {
@@ -150,6 +164,17 @@
       text-align: center;
     }
 
+    .hero-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--border);
+      margin: 0 auto 20px;
+      display: block;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    }
+
     .hero-label {
       font-size: 12px;
       font-weight: 500;
@@ -184,6 +209,11 @@
       height: 380px;
       object-fit: cover;
       display: block;
+      opacity: 0.92;
+    }
+
+    [data-theme="light"] .hero-image img {
+      opacity: 1;
     }
 
     /* Stats */
@@ -202,6 +232,7 @@
       padding: 24px 16px;
       text-align: center;
       transition: background var(--transition);
+      backdrop-filter: blur(8px);
     }
 
     .stat-value {
@@ -364,11 +395,13 @@
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 20px;
-      transition: border-color var(--transition), background var(--transition);
+      transition: border-color var(--transition), background var(--transition), box-shadow var(--transition);
+      backdrop-filter: blur(8px);
     }
 
     .card:hover {
       border-color: var(--border-hover);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.1);
     }
 
     .card-title {
@@ -494,7 +527,58 @@
 
     .checklist li:last-child { border-bottom: none; }
 
-    /* FAQ */
+    /* Collapsible sections */
+    .collapse {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin: 24px 0;
+      transition: border-color var(--transition);
+    }
+
+    .collapse[open] {
+      border-color: var(--border-hover);
+    }
+
+    .collapse summary {
+      padding: 18px 20px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .collapse summary::-webkit-details-marker { display: none; }
+
+    .collapse summary::after {
+      content: '+';
+      font-size: 18px;
+      font-weight: 300;
+      color: var(--text-tertiary);
+      flex-shrink: 0;
+    }
+
+    .collapse[open] summary::after {
+      content: '−';
+    }
+
+    .collapse-body {
+      padding: 0 20px 20px;
+    }
+
+    .collapse summary .collapse-hint {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-tertiary);
+      margin-left: auto;
+      margin-right: 12px;
+    }
+
+    /* FAQ specific */
     .faq-item {
       border-bottom: 1px solid var(--border);
     }
@@ -521,7 +605,6 @@
       font-size: 18px;
       font-weight: 300;
       color: var(--text-tertiary);
-      transition: transform var(--transition);
       flex-shrink: 0;
     }
 
@@ -534,6 +617,50 @@
       color: var(--text-secondary);
       line-height: 1.6;
       padding-bottom: 16px;
+    }
+
+    /* Food items */
+    .food-item {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: start;
+    }
+
+    .food-item:last-child { border-bottom: none; }
+
+    .food-item img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: var(--radius-sm);
+      background: var(--bg-muted);
+    }
+
+    .food-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .food-where {
+      font-size: 12px;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    .food-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    @media (max-width: 600px) {
+      .food-item { grid-template-columns: 100px 1fr; gap: 12px; }
     }
 
     /* Footer */
@@ -585,6 +712,7 @@
   <div class="container">
     <!-- Hero -->
     <header class="hero">
+      <img src="us.jpg" alt="Aman and Needhi" class="hero-avatar">
       <div class="hero-label">Oct 15 – Oct 31, 2026</div>
       <h1>China: Our Adventure Awaits</h1>
       <p class="hero-sub">Aman + Needhi — 16 days, 7 cities, infinite memories</p>
@@ -854,20 +982,55 @@
 
       <img class="img-feature" src="https://images.pexels.com/photos/34902901/pexels-photo-34902901.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Tianmen Mountain cable car disappearing into thick mist">
 
-      <h3>Ancient Towns — Choose Your Afternoon</h3>
-      <p>Last afternoon: visit one of China's most beautiful ancient towns, 2-3 hours from Zhangjiajie.</p>
+      <h3>Ancient Towns — Choose Your Afternoon (Oct 28)</h3>
+      <p>After Tianmen Mountain in the morning, we have the afternoon free. Two options — both are stunning ancient riverside towns, but very different vibes. We pick one.</p>
 
-      <div class="card-grid">
-        <div class="card">
-          <img class="card-img" src="https://images.pexels.com/photos/25000466/pexels-photo-25000466.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Fenghuang ancient town bridge illuminated with colorful lights at night">
-          <div class="card-title">Fenghuang Ancient Town</div>
-          <p>The "Phoenix Town" — more popular, more polished. Miao-style stilt houses lining Tuojiang River. Red lanterns reflecting in water at dusk. Riverside bars and night markets.</p>
+      <!-- Fenghuang -->
+      <div class="card" style="margin: 24px 0; padding: 0; overflow: hidden;">
+        <img src="https://images.pexels.com/photos/25000466/pexels-photo-25000466.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Fenghuang ancient town bridge illuminated with colorful lanterns reflecting in river at night" style="width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block;">
+        <div style="padding: 24px;">
+          <div class="card-title" style="color: var(--accent);">Option A — Fenghuang Ancient Town</div>
+          <p style="font-size: 13px; color: var(--text-tertiary); margin-bottom: 16px;"><strong style="color: var(--text-secondary);">3h drive from Zhangjiajie</strong> · Best arrived by 3-4 PM for golden hour → stay for night views · Can hire a private driver (~¥400) or take the tourist bus</p>
+          <p>The "Phoenix Town" — China's most photogenic ancient settlement. Traditional Miao-style wooden stilt houses line both banks of the Tuojiang River, connected by covered bridges and stone paths. At dusk, hundreds of red lanterns switch on simultaneously and the whole town reflects in the river like a painting.</p>
+          <p><strong>Why choose this one:</strong> Better for photography. More things to do (boat rides, night bars, Miao silver jewelry shopping). The night scene is genuinely spectacular — it's China's most-Instagrammed ancient town for a reason. Lots of food options along the river.</p>
+          <p><strong>The tradeoff:</strong> It's popular. October is peak season. You'll share the cobblestone streets with tour groups and selfie sticks. The main strip is commercial. But walk 5 minutes off the main drag and it's quiet and beautiful.</p>
         </div>
-        <div class="card">
-          <img class="card-img" src="https://images.pexels.com/photos/34683504/pexels-photo-34683504.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Furong town illuminated pagoda over waterfall at night">
-          <div class="card-title">Furong Ancient Town</div>
-          <p>The "Hibiscus Town" — less touristy, more dramatic. 60-meter waterfall through town center. Tujia stilt houses on cliff edges. Fewer crowds, authentic feel.</p>
+        <div class="gallery" style="margin: 0 0 16px 0; padding: 0 24px;">
+          <figure class="gallery-item">
+            <img src="https://images.pexels.com/photos/30252160/pexels-photo-30252160.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Fenghuang ancient town aerial view showing river and traditional rooftops">
+            <figcaption>Aerial view — River winding through town</figcaption>
+          </figure>
+          <figure class="gallery-item">
+            <img src="https://images.pexels.com/photos/25000466/pexels-photo-25000466.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Fenghuang bridge and stilt houses illuminated at night">
+            <figcaption>Night scene — Lanterns reflecting on the Tuojiang</figcaption>
+          </figure>
         </div>
+      </div>
+
+      <!-- Furong -->
+      <div class="card" style="margin: 24px 0; padding: 0; overflow: hidden;">
+        <img src="https://images.pexels.com/photos/34683504/pexels-photo-34683504.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Furong ancient town illuminated pagoda perched above a massive waterfall at night" style="width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block;">
+        <div style="padding: 24px;">
+          <div class="card-title" style="color: var(--accent);">Option B — Furong Ancient Town</div>
+          <p style="font-size: 13px; color: var(--text-tertiary); margin-bottom: 16px;"><strong style="color: var(--text-secondary);">2h drive from Zhangjiajie</strong> · Closer, so more flexible timing · Can combine with a late Tianmen Mountain morning</p>
+          <p>The "Hibiscus Town" — named after the 1986 Chinese film shot here. A 60-meter waterfall crashes directly through the center of town. Traditional Tujia stilt houses perch on cliff edges above the cascade. The whole town is built vertically into the rock face — stairs, not streets.</p>
+          <p><strong>Why choose this one:</strong> More dramatic natural scenery. The waterfall-through-town thing is unique — you won't see that anywhere else in China. Significantly fewer tourists than Fenghuang. Feels more "discovery" and less "tourist attraction." The night lighting of the waterfall is haunting.</p>
+          <p><strong>The tradeoff:</strong> Smaller town, fewer food/shopping options. Less to "do" beyond walking, photographing, and watching the waterfall. The vertical layout means lots of stairs (after a morning of 999 steps at Tianmen, your legs might file a complaint).</p>
+        </div>
+        <div class="gallery" style="margin: 0 0 16px 0; padding: 0 24px;">
+          <figure class="gallery-item">
+            <img src="https://images.pexels.com/photos/34683504/pexels-photo-34683504.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Furong town pagoda and waterfall lit up at night">
+            <figcaption>The waterfall — 60 meters through the town center</figcaption>
+          </figure>
+          <figure class="gallery-item">
+            <img src="https://images.pexels.com/photos/30131349/pexels-photo-30131349.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Traditional stilt houses along a quiet riverside">
+            <figcaption>Tujia stilt houses — Built into the cliff face</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="callout">
+        <p><strong>Current lean:</strong> Fenghuang for the night photography and river atmosphere, but Furong is closer and our legs might appreciate fewer stairs after Tianmen. We can decide on the morning of Oct 28 based on energy levels.</p>
       </div>
     </section>
 
@@ -925,72 +1088,158 @@
     <section class="section" id="food">
       <div class="section-label">Eat</div>
       <h2>Food We Cannot Miss</h2>
+      <p class="section-desc">The non-negotiable eating agenda across 4 culinary regions</p>
 
-      <div class="gallery">
-        <figure class="gallery-item">
-          <img src="https://images.pexels.com/photos/29529568/pexels-photo-29529568.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Dim sum dumplings arranged in bamboo steamers">
-          <figcaption>Cantonese Dim Sum · Guangzhou</figcaption>
-        </figure>
-        <figure class="gallery-item">
-          <img src="https://images.pexels.com/photos/36120991/pexels-photo-36120991.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Bubbling Sichuan hotpot with red chili oil">
-          <figcaption>Sichuan Hotpot · Chengdu</figcaption>
-        </figure>
-        <figure class="gallery-item">
-          <img src="https://images.pexels.com/photos/7287689/pexels-photo-7287689.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Delicate steamed soup dumplings">
-          <figcaption>Xiaolongbao · Bite carefully</figcaption>
-        </figure>
-        <figure class="gallery-item">
-          <img src="https://images.pexels.com/photos/34618075/pexels-photo-34618075.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Mapo tofu in clay pot with chili oil">
-          <figcaption>Mapo Tofu · Numbing chili bean curd</figcaption>
-        </figure>
-        <figure class="gallery-item">
-          <img src="https://images.pexels.com/photos/27277231/pexels-photo-27277231.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Nine-grid hotpot with ingredients cooking">
-          <figcaption>Nine-Grid Hotpot · Chongqing</figcaption>
-        </figure>
-        <figure class="gallery-item">
-          <img src="https://images.pexels.com/photos/8093867/pexels-photo-8093867.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Chef folding fresh dumplings by hand">
-          <figcaption>Fresh Made · Watch them roll and fold</figcaption>
-        </figure>
-      </div>
-      <p class="gallery-hint">← Swipe to explore →</p>
+      <details class="collapse" open>
+        <summary>Cantonese — Guangzhou <span class="collapse-hint">Days 1, 14–16</span></summary>
+        <div class="collapse-body">
+          <div class="food-item">
+            <img src="https://images.pexels.com/photos/29529568/pexels-photo-29529568.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Dim sum in bamboo steamers">
+            <div>
+              <div class="food-name">Dim Sum (Yum Cha)</div>
+              <div class="food-where">Guangzhou · Diǎn Dū Dé (点都德)</div>
+              <div class="food-desc">The original. Bamboo steamers stacked high with har gow (crystal shrimp dumplings), siu mai (pork dumplings), char siu bao (BBQ pork buns), cheung fun (rice noodle rolls). You point at the cart, they put it on your table. Bill is calculated by plate color. Budget ¥80-100/person for a full spread.</div>
+            </div>
+          </div>
+          <div class="food-item">
+            <img src="https://images.pexels.com/photos/7287689/pexels-photo-7287689.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Crystal shrimp dumplings">
+            <div>
+              <div class="food-name">Har Gow (虾饺)</div>
+              <div class="food-where">Guangzhou · Any dim sum restaurant</div>
+              <div class="food-desc">The benchmark of a good dim sum kitchen. Translucent pleated wrapper (exactly 7-10 folds if the chef is serious) filled with whole shrimp that snap when you bite. If these aren't good, leave the restaurant. They're the canary in the coal mine of Cantonese food.</div>
+            </div>
+          </div>
+          <div class="food-item">
+            <img src="https://images.pexels.com/photos/32860331/pexels-photo-32860331.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Multiple dim sum dishes spread out">
+            <div>
+              <div class="food-name">Congee + Zhaliang</div>
+              <div class="food-where">Guangzhou · Morning street stalls</div>
+              <div class="food-desc">Silky rice porridge slow-cooked until it's basically liquid velvet, served with zhaliang (fried dough wrapped in rice noodle sheet, drizzled with soy). The locals eat this at 6 AM. We'll eat it whenever we wake up. Perfect hangover food, even if the hangover is from jet lag.</div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details class="collapse">
+        <summary>Sichuan — Chengdu <span class="collapse-hint">Days 4–7</span></summary>
+        <div class="collapse-body">
+          <div class="food-item">
+            <img src="https://images.pexels.com/photos/36120991/pexels-photo-36120991.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Bubbling Sichuan hotpot">
+            <div>
+              <div class="food-name">Sichuan Hotpot</div>
+              <div class="food-where">Chengdu · Literally everywhere</div>
+              <div class="food-desc">Split pot: one side is a churning crimson lake of chili oil, Sichuan peppercorns, and dried chilies. The other side is mild bone broth for the items you want to actually taste. You order raw ingredients (sliced meat, tofu, mushrooms, greens) and cook them yourself. The málà (numbing-spicy) side will make your lips tingle for an hour afterward. This is considered a feature.</div>
+            </div>
+          </div>
+          <div class="food-item">
+            <img src="https://images.pexels.com/photos/34618075/pexels-photo-34618075.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Mapo tofu in clay pot">
+            <div>
+              <div class="food-name">Mapo Tofu (麻婆豆腐)</div>
+              <div class="food-where">Chengdu · Chen Mapo Tofu (est. 1862)</div>
+              <div class="food-desc">Soft tofu cubes swimming in a fiery sauce of doubanjiang (chili bean paste), fermented black beans, ground pork, and a heavy dusting of ground Sichuan peppercorn. "Mapo" means "pockmarked grandma" — named after the woman who invented it. The original restaurant still exists in Chengdu. It's simultaneously the simplest and most complex dish on this list.</div>
+            </div>
+          </div>
+          <div class="food-item">
+            <img src="https://images.pexels.com/photos/8093867/pexels-photo-8093867.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Dumplings being prepared">
+            <div>
+              <div class="food-name">Dan Dan Noodles (担担面)</div>
+              <div class="food-where">Chengdu · Street stalls, Kuanzhai Alley</div>
+              <div class="food-desc">Thin wheat noodles in a small bowl (this is a snack, not a meal) with a sauce made of chili oil, Sichuan pepper, minced pork, and preserved vegetables. Named after the shoulder pole ("dan dan") that street vendors used to carry them through the streets. ¥8-15 per bowl. You will eat 3.</div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details class="collapse">
+        <summary>Chongqing Style <span class="collapse-hint">Days 8–10</span></summary>
+        <div class="collapse-body">
+          <div class="food-item">
+            <img src="https://images.pexels.com/photos/27277231/pexels-photo-27277231.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Nine-grid hotpot cooking">
+            <div>
+              <div class="food-name">Nine-Grid Hotpot (九宫格火锅)</div>
+              <div class="food-where">Chongqing · Jiefangbei area</div>
+              <div class="food-desc">Chongqing's version is different from Sichuan — the pot is divided into 9 squares with a metal grid. Each square has different boiling intensity. Center = volcanic. Edges = gentle simmer. You place ingredients strategically based on how fast they cook. It's basically a spicy tactical game with food. The broth uses beef tallow which gives it a richer, stickier heat.</div>
+            </div>
+          </div>
+          <div class="food-item">
+            <img src="https://images.pexels.com/photos/19775602/pexels-photo-19775602.jpeg?auto=compress&cs=tinysrgb&w=400" alt="People eating at hotpot restaurant">
+            <div>
+              <div class="food-name">Chongqing Small Noodles (小面)</div>
+              <div class="food-where">Chongqing · Any street corner, ¥10</div>
+              <div class="food-desc">The city's actual staple food — not hotpot, but these humble alkaline noodles in a spicy, nutty, sesame-soy sauce with pickled vegetables and peanuts. Every Chongqing person has a strong opinion about which street stall makes the best one. Breakfast food. ¥8-12. The best ones are in the most nondescript shopfronts imaginable.</div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details class="collapse">
+        <summary>Yangshuo & Street Food <span class="collapse-hint">Days 2–3</span></summary>
+        <div class="collapse-body">
+          <div class="food-item">
+            <img src="https://images.pexels.com/photos/29529568/pexels-photo-29529568.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Food preparation">
+            <div>
+              <div class="food-name">Beer Fish (啤酒鱼)</div>
+              <div class="food-where">Yangshuo · West Street restaurants</div>
+              <div class="food-desc">Yangshuo's signature dish. Fresh Li River fish wok-fried with local beer, tomatoes, peppers, and garlic. The beer reduces into a sweet-savory sauce that coats the crispy fish skin. Every restaurant on West Street claims theirs is "the original." None of them are. All of them are good. ¥60-80 for a whole fish.</div>
+            </div>
+          </div>
+          <div class="food-item">
+            <img src="https://images.pexels.com/photos/8093867/pexels-photo-8093867.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Street food preparation">
+            <div>
+              <div class="food-name">Guilin Rice Noodles (桂林米粉)</div>
+              <div class="food-where">Yangshuo & Guilin · Street stalls</div>
+              <div class="food-desc">Thin, silky rice noodles in a clear bone broth, topped with braised beef, pickled beans, roasted peanuts, scallions, and chili. Locals add all the condiments from the table — vinegar, chili oil, pickled peppers — until it's their perfect bowl. ¥6-10. You customize it yourself from the condiment bar. It's like Subway but for noodles and actually good.</div>
+            </div>
+          </div>
+        </div>
+      </details>
     </section>
 
     <!-- SHOPPING -->
     <section class="section">
       <div class="section-label">Shop</div>
-      <h2>What to Buy in China</h2>
+      <h2>What to Buy</h2>
       <p class="section-desc">Based on Reddit r/travel + r/Chinavisa recommendations</p>
 
-      <div class="card-grid">
-        <div class="card">
-          <div class="card-title">Electronics & Tech</div>
-          <p><strong>DJI drones</strong> — 15-20% cheaper. Flagship stores in Guangzhou and Shenzhen.</p>
-          <p><strong>Xiaomi</strong> — Mi Bands, smart home gadgets at fraction of export prices.</p>
-          <p><strong>Huaqiangbei Market</strong> (Shenzhen) — World's largest electronics market.</p>
-          <p>Skip: iPhones (same price globally), laptops (Chinese keyboard).</p>
+      <details class="collapse">
+        <summary>Electronics & Tech <span class="collapse-hint">Shenzhen, Guangzhou</span></summary>
+        <div class="collapse-body">
+          <p><strong>DJI drones</strong> — 15-20% cheaper than US/India. Flagship stores in Guangzhou and Shenzhen. Mini 4 Pro, Osmo Action 5, Pocket 3.</p>
+          <p><strong>Xiaomi</strong> — Mi Bands, smart home gadgets at fraction of export prices. Xiaomi Home stores everywhere.</p>
+          <p><strong>Huaqiangbei Market</strong> (Shenzhen) — World's largest electronics market. Cables, chargers, accessories.</p>
+          <p>Skip: iPhones (same price globally), laptops (Chinese keyboard layout).</p>
         </div>
-        <div class="card">
-          <div class="card-title">Fashion & Clothing</div>
-          <p><strong>Silk</strong> — Scarves, pajamas, bedding at great prices.</p>
-          <p><strong>Cashmere</strong> — Inner Mongolia quality. Erdos brand is reliable.</p>
-          <p><strong>Tailored suits</strong> — Custom in 24-48 hours. Shenzhen/Guangzhou markets.</p>
-          <p><strong>Outdoor gear</strong> — Kailas, Toread at 30-50% of Western brands.</p>
+      </details>
+
+      <details class="collapse">
+        <summary>Fashion & Clothing <span class="collapse-hint">All cities</span></summary>
+        <div class="collapse-body">
+          <p><strong>Silk</strong> — Scarves, pajamas, bedding at great prices. Chengdu and Guangzhou have good shops.</p>
+          <p><strong>Cashmere</strong> — Inner Mongolia quality. Erdos brand is reliable. 100% cashmere sweaters.</p>
+          <p><strong>Tailored suits</strong> — Custom in 24-48 hours. Shenzhen/Guangzhou markets copy any design.</p>
+          <p><strong>Outdoor gear</strong> — Kailas, Toread at 30-50% of Western brands. Good for hiking gear.</p>
         </div>
-        <div class="card">
-          <div class="card-title">Tea & Food</div>
-          <p><strong>Chinese tea</strong> — Longjing, Pu'er, Tieguanyin. Buy from specialty shops.</p>
-          <p><strong>Sichuan peppercorns</strong> — Vacuum-sealed in Chengdu.</p>
-          <p><strong>White Rabbit Candy</strong> — Classic milk candy. Great gifts.</p>
-          <p><strong>Chili oil / Lao Gan Ma</strong> — Stock up. Heavy but worth it.</p>
+      </details>
+
+      <details class="collapse">
+        <summary>Tea & Food Gifts <span class="collapse-hint">Chengdu, Guangzhou</span></summary>
+        <div class="collapse-body">
+          <p><strong>Chinese tea</strong> — Longjing (Dragon Well), Pu'er, Tieguanyin oolong. Buy from specialty tea shops, not tourist markets.</p>
+          <p><strong>Sichuan peppercorns</strong> — Vacuum-sealed in Chengdu. The numbing spice that defines the cuisine.</p>
+          <p><strong>White Rabbit Candy</strong> — Classic Chinese milk candy. Nostalgia in a wrapper. Great gifts.</p>
+          <p><strong>Chili oil / Lao Gan Ma</strong> — Stock up on crispy chili oil. Heavy but worth it.</p>
         </div>
-        <div class="card">
-          <div class="card-title">Culture & Souvenirs</div>
-          <p><strong>Calligraphy brushes</strong> — Lake Pen (Huzhou). Ink stones and rice paper.</p>
-          <p><strong>Jade & pearls</strong> — Only certified shops. Freshwater pearls are affordable.</p>
-          <p><strong>Panda merch</strong> — Official Panda Base shop has quality items.</p>
-          <p><strong>Cloisonné</strong> — Traditional enamel on copper.</p>
+      </details>
+
+      <details class="collapse">
+        <summary>Culture & Souvenirs <span class="collapse-hint">Everywhere</span></summary>
+        <div class="collapse-body">
+          <p><strong>Calligraphy brushes</strong> — Lake Pen (Huzhou). Also ink stones and rice paper.</p>
+          <p><strong>Jade & pearls</strong> — Only buy from certified shops. Fake jade is everywhere. Freshwater pearls are affordable.</p>
+          <p><strong>Panda merch</strong> — Official Panda Base shop in Chengdu has quality items. Skip random tourist stalls.</p>
+          <p><strong>Cloisonné</strong> — Traditional enamel work on copper. Beautiful and unique.</p>
         </div>
-      </div>
+      </details>
 
       <div class="callout">
         <p><strong>Pro tips:</strong> Bargain in markets (start at 30% asking). Use WeChat Pay for better deals. Keep receipts for expensive items. Declare electronics at customs if over ₹50,000 total.</p>
@@ -1002,33 +1251,48 @@
       <div class="section-label">Essentials</div>
       <h2>Practical Info</h2>
 
-      <div class="card-grid">
-        <div class="card">
-          <div class="card-title">Weather in October</div>
-          <p>South (Guangzhou, Yangshuo): 20-28°C — summer + light layer</p>
-          <p>Central (Chengdu, Chongqing): 15-22°C — light jacket</p>
-          <p>Mountains (Jiuzhaigou, Zhangjiajie): 5-15°C — warm fleece + rain jacket</p>
-          <p><strong>October = golden autumn. Peak foliage in mountains.</strong></p>
+      <details class="collapse">
+        <summary>Weather in October</summary>
+        <div class="collapse-body">
+          <p>South (Guangzhou, Yangshuo): 20-28°C — summer clothes + light layer</p>
+          <p>Central (Chengdu, Chongqing): 15-22°C — comfortable, light jacket</p>
+          <p>Mountains (Jiuzhaigou, Zhangjiajie): 5-15°C — warm fleece + rain jacket essential</p>
+          <p><strong>October = golden autumn. Peak foliage in mountains. Best time to visit.</strong></p>
         </div>
-        <div class="card">
-          <div class="card-title">Getting Around</div>
-          <p><strong>HSR:</strong> Book on Trip.com 15 days ahead. 2nd class is spacious. Trains run on the minute.</p>
-          <p><strong>Local:</strong> Didi (Chinese Uber) for taxis. Metro in cities. Keep hotel address in Chinese on phone.</p>
+      </details>
+
+      <details class="collapse">
+        <summary>Getting Around</summary>
+        <div class="collapse-body">
+          <p><strong>HSR (High-Speed Rail):</strong> Book on Trip.com 15 days ahead. 2nd class is spacious (more legroom than business class flights). Trains run on the minute. Bring passport to the station.</p>
+          <p><strong>Local transport:</strong> Didi (Chinese Uber) for taxis — works with international cards. Metro in all major cities. Keep hotel address screenshot in Chinese on phone for taxi drivers.</p>
+          <p><strong>Airport:</strong> Baiyun (CAN) is well-connected by metro. Allow 2h before international flights.</p>
         </div>
-        <div class="card">
-          <div class="card-title">Money & Internet</div>
-          <p>WeChat Pay / Alipay works everywhere — link international card before trip.</p>
-          <p>China Unicom eSIM or Airalo for data.</p>
-          <p>VPN needed for Google/WhatsApp/Instagram. Download offline maps.</p>
+      </details>
+
+      <details class="collapse">
+        <summary>Money & Internet</summary>
+        <div class="collapse-body">
+          <p><strong>Payments:</strong> WeChat Pay / Alipay works everywhere — even street food vendors. Link international Visa/Mastercard before departure. Cash is rarely needed but keep ¥500 as backup.</p>
+          <p><strong>Internet:</strong> China Unicom eSIM or Airalo for data. Covers all cities.</p>
+          <p><strong>VPN:</strong> Required for Google, WhatsApp, Instagram, YouTube. Pre-install and test before departure. ExpressVPN or Astrill work best in China.</p>
+          <p><strong>Offline prep:</strong> Download Google Maps offline for all cities. Save hotel addresses in Chinese. Download Pleco dictionary app.</p>
         </div>
-        <div class="card">
-          <div class="card-title">Pack List</div>
-          <p>Comfortable walking shoes (10k+ steps/day)</p>
-          <p>Rain jacket (mountains = mist)</p>
-          <p>Warm fleece for Jiuzhaigou mornings (5°C)</p>
-          <p>Power bank, passport copies, offline translation app</p>
+      </details>
+
+      <details class="collapse">
+        <summary>Pack List</summary>
+        <div class="collapse-body">
+          <p>Comfortable walking shoes (10k+ steps/day, tested before trip)</p>
+          <p>Rain jacket (mountains = unpredictable mist)</p>
+          <p>Warm fleece for Jiuzhaigou mornings (5°C at 8 AM)</p>
+          <p>Power bank 20,000mAh (long train days, full day in parks)</p>
+          <p>Passport copies — hotels check at check-in, keep digital + paper</p>
+          <p>Offline Chinese translation app (Pleco or Google Translate downloaded)</p>
+          <p>Motion sickness meds (Wulong mountain roads are windy)</p>
+          <p>Universal plug adapter (China uses Type A/I)</p>
         </div>
-      </div>
+      </details>
     </section>
 
     <!-- BUCKET LIST -->
@@ -1037,30 +1301,35 @@
       <h2>Trip Bucket List</h2>
       <p class="section-desc">The moments that will make this unforgettable</p>
 
-      <div class="card-grid">
-        <div class="card" style="border-color: var(--accent);">
-          <div class="card-title" style="color: var(--accent);">Once-in-a-Lifetime</div>
+      <details class="collapse" open>
+        <summary>Once-in-a-Lifetime Moments</summary>
+        <div class="collapse-body">
           <ul class="checklist">
-            <li><strong>Sunrise at Xingping</strong> — 20-yuan view emerging from morning mist</li>
-            <li><strong>Baby Pandas at Play</strong> — Arrive at 8 AM when cubs are most active</li>
-            <li><strong>Bailong Elevator</strong> — 90 seconds straight up a cliff in glass</li>
-            <li><strong>Tianmen Heaven's Gate</strong> — 999 steps through a hole in the mountain</li>
-            <li><strong>Chongqing at Night</strong> — Hongyadong lit like a Studio Ghibli scene</li>
+            <li><strong>Sunrise at Xingping</strong> — Watch the 20-yuan landscape emerge from morning mist on the Li River</li>
+            <li><strong>Baby Pandas at Play</strong> — Arrive at opening (8 AM) when the cubs are tumbling and wrestling</li>
+            <li><strong>Bailong Elevator</strong> — 90 seconds straight up a cliff face in a glass cabin. 326 meters.</li>
+            <li><strong>Tianmen Heaven's Gate</strong> — Descend 999 steps through a literal hole in the mountain</li>
+            <li><strong>Chongqing at Night</strong> — Hongyadong lit up like we walked into a Studio Ghibli scene</li>
+            <li><strong>Jiuzhaigou Mirror Lake</strong> — Autumn foliage reflecting in water so clear you can't tell which way is up</li>
           </ul>
         </div>
-        <div class="card">
-          <div class="card-title">Experience Checklist</div>
+      </details>
+
+      <details class="collapse">
+        <summary>Experience Checklist</summary>
+        <div class="collapse-body">
           <ul class="checklist">
-            <li>Order hotpot by pointing at picture menu</li>
-            <li>Find a mala spice level we can handle</li>
-            <li>Take HSR at 350 km/h</li>
-            <li>Bargain at a market in broken Mandarin</li>
-            <li>Pay for everything with WeChat face-scan</li>
-            <li>Walk a glass skywalk without looking down</li>
-            <li>Find the secret dim sum spot locals love</li>
+            <li>Order hotpot by pointing at the picture menu with zero comprehension</li>
+            <li>Find a mala spice level we can handle without crying</li>
+            <li>Take the HSR at 350 km/h and pretend that's normal</li>
+            <li>Bargain at a market in broken Mandarin and feel unreasonably proud</li>
+            <li>Pay for street food with WeChat face-scan like a local</li>
+            <li>Walk a glass skywalk without looking down (unlikely but aspirational)</li>
+            <li>Find the secret dim sum spot that only locals know about</li>
+            <li>Successfully navigate a Chinese train station with only screenshots</li>
           </ul>
         </div>
-      </div>
+      </details>
     </section>
 
     <!-- BUDGET -->
@@ -1074,29 +1343,34 @@
         <div class="stat"><div class="stat-value">1.1L</div><div class="stat-label">Hotels (15 nights)</div></div>
       </div>
 
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr><th>Category</th><th>Estimated (INR)</th><th>Notes</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Flights (BLR-GZ-BLR)</td><td>1,20,000</td><td>Singapore Airlines — booked</td></tr>
-            <tr><td>Hotels (15 nights)</td><td>1,10,000–1,25,000</td><td>Mid-range, Reddit-recommended</td></tr>
-            <tr><td>HSR Trains</td><td>45,000–52,000</td><td>All legs, 2nd class</td></tr>
-            <tr><td>Attractions</td><td>28,000–34,000</td><td>Pandas, rafting, parks, cable cars</td></tr>
-            <tr><td>Food (16 days)</td><td>28,000–35,000</td><td>Street food + restaurants + hotpot</td></tr>
-            <tr><td>Local Transport</td><td>12,000–15,000</td><td>Didi, metro, shuttles</td></tr>
-            <tr><td>Visa + SIM + Buffer</td><td>24,000–26,000</td><td>Everything else</td></tr>
-          </tbody>
-        </table>
-      </div>
+      <details class="collapse">
+        <summary>Full Breakdown</summary>
+        <div class="collapse-body">
+          <div class="table-wrap" style="margin: 0;">
+            <table>
+              <thead>
+                <tr><th>Category</th><th>Estimated (INR)</th><th>Notes</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Flights (BLR-GZ-BLR)</td><td>1,20,000</td><td>Singapore Airlines — booked</td></tr>
+                <tr><td>Hotels (15 nights)</td><td>1,10,000–1,25,000</td><td>Mid-range, Reddit-recommended</td></tr>
+                <tr><td>HSR Trains</td><td>45,000–52,000</td><td>All legs, 2nd class</td></tr>
+                <tr><td>Attractions</td><td>28,000–34,000</td><td>Pandas, rafting, parks, cable cars</td></tr>
+                <tr><td>Food (16 days)</td><td>28,000–35,000</td><td>Street food + restaurants + hotpot</td></tr>
+                <tr><td>Local Transport</td><td>12,000–15,000</td><td>Didi, metro, shuttles</td></tr>
+                <tr><td>Visa + SIM + Buffer</td><td>24,000–26,000</td><td>Everything else</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </details>
     </section>
 
     <!-- FAQ -->
     <section class="section">
       <div class="section-label">FAQ</div>
-      <h2>Needhi Asks, Aman Answers</h2>
-      <p class="section-desc">Legitimate concerns met with questionable reassurance</p>
+      <h2>Frequently Anxious Questions</h2>
+      <p class="section-desc">Valid concerns, mostly valid answers</p>
 
       <details class="faq-item">
         <summary>Wait, neither of us speaks Mandarin?</summary>
