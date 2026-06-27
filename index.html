@@ -83,17 +83,14 @@
 
     /* Theme Toggle */
     .theme-toggle {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 200;
       display: flex;
       background: var(--bg-elevated);
       border: 1px solid var(--border);
       border-radius: 24px;
-      padding: 4px;
+      padding: 3px;
       gap: 2px;
-      box-shadow: var(--shadow);
+      flex-shrink: 0;
+      margin-left: auto;
     }
 
     .theme-btn {
@@ -680,19 +677,12 @@
       .stats { grid-template-columns: repeat(2, 1fr); }
       .card-grid { grid-template-columns: 1fr; }
       .hero h1 { font-size: 28px; }
-      .theme-toggle { top: 12px; right: 12px; }
       .gallery-item { flex: 0 0 90%; }
       .img-duo { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
-  <!-- Theme Toggle -->
-  <div class="theme-toggle">
-    <button class="theme-btn" data-theme="light" aria-label="Light mode">☀️</button>
-    <button class="theme-btn active" data-theme="dark" aria-label="Dark mode">🌙</button>
-  </div>
-
   <!-- Navigation -->
   <nav class="nav">
     <div class="nav-inner">
@@ -706,6 +696,11 @@
       <a href="#itinerary" class="nav-link">Itinerary</a>
       <a href="#food" class="nav-link">Food</a>
       <a href="#budget" class="nav-link">Budget</a>
+      <!-- Theme Toggle -->
+      <div class="theme-toggle">
+        <button class="theme-btn" data-theme="light" aria-label="Light mode">☀️</button>
+        <button class="theme-btn active" data-theme="dark" aria-label="Dark mode">🌙</button>
+      </div>
     </div>
   </nav>
 
