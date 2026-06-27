@@ -1,408 +1,442 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>China Adventure 2026 — Aman + Needhi</title>
+  <title>China 2026 — Aman + Needhi</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-primary: #09090b;
-      --bg-secondary: #121215;
-      --bg-card: #18181b;
-      --bg-elevated: #27272a;
-      --text-primary: #fafafa;
-      --text-secondary: #a1a1aa;
-      --text-tertiary: #71717a;
-      --accent: #f97316;
-      --accent-soft: rgba(249, 115, 22, 0.12);
-      --accent-hover: #ea580c;
-      --success: #10b981;
-      --warning: #fbbf24;
-      --border: #27272a;
-      --radius: 16px;
-      --radius-sm: 10px;
-      --gradient-warm: linear-gradient(135deg, #f97316 0%, #ec4899 100%);
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --max-w: 720px;
+      --radius: 12px;
+      --radius-sm: 8px;
+      --transition: 0.2s ease;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    [data-theme="dark"] {
+      --bg: #0a0a0a;
+      --bg-subtle: #141414;
+      --bg-muted: #1a1a1a;
+      --bg-elevated: #222;
+      --text: #fafafa;
+      --text-secondary: #999;
+      --text-tertiary: #666;
+      --border: #222;
+      --border-hover: #333;
+      --accent: #d4a574;
+      --accent-muted: rgba(212, 165, 116, 0.1);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3);
+      --nav-bg: rgba(10, 10, 10, 0.8);
     }
 
-    html {
-      scroll-behavior: smooth;
+    [data-theme="light"] {
+      --bg: #fafafa;
+      --bg-subtle: #f5f5f5;
+      --bg-muted: #f0f0f0;
+      --bg-elevated: #fff;
+      --text: #111;
+      --text-secondary: #555;
+      --text-tertiary: #888;
+      --border: #e5e5e5;
+      --border-hover: #ccc;
+      --accent: #b8783c;
+      --accent-muted: rgba(184, 120, 60, 0.08);
+      --shadow: 0 1px 3px rgba(0,0,0,0.08);
+      --nav-bg: rgba(250, 250, 250, 0.85);
     }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg-primary);
-      color: var(--text-primary);
-      line-height: 1.65;
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
       -webkit-font-smoothing: antialiased;
-      letter-spacing: -0.01em;
-    }
-
-    h1, h2, h3, .hero-title {
-      font-family: 'Space Grotesk', sans-serif;
-      letter-spacing: -0.03em;
+      font-size: 15px;
+      transition: background var(--transition), color var(--transition);
     }
 
     .container {
-      max-width: 1000px;
+      max-width: var(--max-w);
       margin: 0 auto;
-      padding: 24px;
+      padding: 0 24px;
     }
 
-    /* Sticky Nav */
-    .sticky-nav {
+    /* Theme Toggle */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 200;
+      display: flex;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 4px;
+      gap: 2px;
+      box-shadow: var(--shadow);
+    }
+
+    .theme-btn {
+      border: none;
+      background: transparent;
+      padding: 6px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 14px;
+      color: var(--text-tertiary);
+      transition: all var(--transition);
+      line-height: 1;
+    }
+
+    .theme-btn.active {
+      background: var(--accent-muted);
+      color: var(--accent);
+    }
+
+    .theme-btn:hover:not(.active) {
+      color: var(--text-secondary);
+    }
+
+    /* Navigation */
+    .nav {
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(9, 9, 11, 0.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: var(--nav-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
-      margin: 0 -24px 24px -24px;
-      padding: 12px 24px;
+      padding: 12px 0;
+      transition: background var(--transition);
     }
 
-    .nav-links {
+    .nav-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 24px;
       display: flex;
-      gap: 6px;
+      gap: 4px;
       overflow-x: auto;
       scrollbar-width: none;
-      -ms-overflow-style: none;
     }
 
-    .nav-links::-webkit-scrollbar {
-      display: none;
-    }
+    .nav-inner::-webkit-scrollbar { display: none; }
 
     .nav-link {
-      padding: 8px 14px;
-      background: var(--bg-card);
-      border-radius: 20px;
+      padding: 6px 14px;
       font-size: 13px;
       font-weight: 500;
-      color: var(--text-secondary);
+      color: var(--text-tertiary);
       text-decoration: none;
       white-space: nowrap;
-      transition: all 0.2s;
-      border: 1px solid transparent;
+      border-radius: 20px;
+      transition: all var(--transition);
     }
 
     .nav-link:hover {
-      background: var(--accent-soft);
-      color: var(--accent);
-      border-color: var(--accent);
+      color: var(--text);
+      background: var(--bg-muted);
     }
 
-    /* Hero Section */
+    /* Hero */
     .hero {
-      position: relative;
-      border-radius: var(--radius);
-      overflow: hidden;
-      margin-bottom: 32px;
+      padding: 80px 0 60px;
+      text-align: center;
+    }
+
+    .hero-label {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 6vw, 48px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+
+    .hero-sub {
+      font-size: 17px;
+      color: var(--text-secondary);
+      font-weight: 300;
     }
 
     .hero-image {
+      margin-top: 40px;
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .hero-image img {
       width: 100%;
       height: 380px;
       object-fit: cover;
       display: block;
     }
 
-    .hero-overlay {
+    /* Stats */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin: 40px 0;
+    }
+
+    .stat {
+      background: var(--bg-subtle);
+      padding: 24px 16px;
+      text-align: center;
+      transition: background var(--transition);
+    }
+
+    .stat-value {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    .stat-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin-top: 4px;
+    }
+
+    /* Section */
+    .section {
+      padding: 60px 0;
+      border-top: 1px solid var(--border);
+      scroll-margin-top: 60px;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+
+    .section-desc {
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+      font-size: 15px;
+    }
+
+    h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 24px 0 8px;
+      letter-spacing: -0.01em;
+    }
+
+    p {
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+    }
+
+    p:last-child { margin-bottom: 0; }
+
+    strong { color: var(--text); font-weight: 600; }
+
+    /* Gallery — horizontal scroll with snap */
+    .gallery {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-padding: 0 24px;
+      margin: 24px -24px;
+      padding: 0 24px;
+      scrollbar-width: none;
+    }
+
+    .gallery::-webkit-scrollbar { display: none; }
+
+    .gallery-item {
+      flex: 0 0 85%;
+      scroll-snap-align: start;
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      aspect-ratio: 3 / 2;
+      object-fit: cover;
+      display: block;
+      background: var(--bg-muted);
+    }
+
+    .gallery-tall .gallery-item img {
+      aspect-ratio: 3 / 4;
+    }
+
+    .gallery-item figcaption {
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
-      padding: 40px;
-      background: linear-gradient(transparent, rgba(0,0,0,0.95));
-    }
-
-    .hero-date {
-      font-size: 12px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 8px;
-      font-weight: 600;
-    }
-
-    .hero-title {
-      font-size: 42px;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 8px;
-      line-height: 1.1;
-    }
-
-    .hero-subtitle {
-      color: rgba(255,255,255,0.75);
-      font-size: 17px;
-    }
-
-    /* Pills */
-    .pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 32px;
-    }
-
-    .pill {
-      background: var(--bg-card);
-      color: var(--text-secondary);
-      padding: 8px 16px;
-      border-radius: 24px;
+      padding: 12px 16px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.7));
       font-size: 13px;
       font-weight: 500;
-      text-decoration: none;
-      border: 1px solid var(--border);
-      transition: all 0.2s ease;
-      cursor: pointer;
-      display: inline-block;
+      color: #fff;
     }
 
-    .pill:hover {
-      background: var(--accent-soft);
-      color: var(--accent);
-      border-color: var(--accent);
-      transform: translateY(-1px);
-    }
-
-    .pill-sm {
-      padding: 4px 10px;
-      font-size: 11px;
-    }
-
-    /* Stats Grid */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      margin-bottom: 48px;
-    }
-
-    @media (max-width: 600px) {
-      .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    .stat {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-      text-align: center;
-      transition: all 0.2s ease;
-    }
-
-    .stat:hover {
-      border-color: var(--accent);
-      transform: translateY(-2px);
-    }
-
-    .stat-value {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 32px;
-      font-weight: 700;
-      color: var(--text-primary);
-    }
-
-    .stat-value.accent { color: var(--accent); }
-    .stat-value.success { color: var(--success); }
-
-    .stat-label {
+    .gallery-hint {
       font-size: 12px;
       color: var(--text-tertiary);
-      margin-top: 4px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+      margin-top: 8px;
+      text-align: center;
     }
 
-    /* Section Headers */
-    h2 {
-      font-size: 26px;
-      font-weight: 700;
-      margin-bottom: 6px;
-      color: var(--text-primary);
-      line-height: 1.2;
+    @media (min-width: 700px) {
+      .gallery-item { flex: 0 0 75%; }
     }
 
-    h3 {
-      font-size: 17px;
-      font-weight: 600;
-      margin-bottom: 8px;
-      color: var(--text-primary);
+    /* Single feature image — full width, tall */
+    .img-feature {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      border-radius: var(--radius);
+      display: block;
+      margin: 24px 0;
+      background: var(--bg-muted);
     }
 
-    .section-subtitle {
-      color: var(--text-tertiary);
-      font-size: 14px;
-      margin-bottom: 20px;
+    /* 2-col image grid — for section openers */
+    .img-duo {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin: 24px 0;
     }
 
-    .section {
-      margin-bottom: 56px;
-      scroll-margin-top: 80px;
+    .img-duo img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border-radius: var(--radius-sm);
+      display: block;
+      background: var(--bg-muted);
     }
 
     /* Cards */
+    .card-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 24px 0;
+    }
+
     .card {
-      background: var(--bg-card);
+      background: var(--bg-subtle);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      overflow: hidden;
-      transition: all 0.2s ease;
+      padding: 20px;
+      transition: border-color var(--transition), background var(--transition);
     }
 
     .card:hover {
-      border-color: rgba(255,255,255,0.1);
+      border-color: var(--border-hover);
     }
 
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 14px 18px;
-      background: var(--bg-elevated);
-      border-bottom: 1px solid var(--border);
-      font-size: 14px;
+    .card-title {
+      font-size: 13px;
       font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin-bottom: 12px;
     }
 
-    .card-body {
-      padding: 18px;
+    .card p {
+      font-size: 14px;
+      line-height: 1.6;
     }
 
-    .card-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-
-    .card-row:last-child {
-      margin-bottom: 0;
-    }
-
-    /* Grid layouts */
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-    }
-
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-
-    @media (max-width: 700px) {
-      .grid-2, .grid-3 {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* Images */
-    .img-rounded {
+    .card-img {
       width: 100%;
       aspect-ratio: 16 / 10;
       object-fit: cover;
       border-radius: var(--radius-sm);
       display: block;
+      margin-bottom: 14px;
+      background: var(--bg-muted);
     }
 
-    .img-banner {
-      width: 100%;
-      aspect-ratio: 21 / 9;
-      object-fit: cover;
-      border-radius: var(--radius-sm);
-      display: block;
-      margin-top: 16px;
+    /* Flight cards */
+    .flight-card {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      transition: border-color var(--transition);
     }
 
-    .img-tall {
-      width: 100%;
-      aspect-ratio: 4 / 3;
-      object-fit: cover;
-      border-radius: var(--radius-sm);
-      display: block;
-    }
-
-    .img-food {
-      width: 100%;
-      aspect-ratio: 4 / 3;
-      object-fit: cover;
-      border-radius: var(--radius-sm);
-      display: block;
-    }
-
-    .grid-3 .img-rounded {
-      aspect-ratio: 4 / 3;
-    }
-
-    .img-caption {
-      margin-top: 8px;
-    }
-
-    .img-caption-title {
-      font-size: 13px;
+    .flight-label {
+      font-size: 11px;
       font-weight: 600;
-    }
-
-    .img-caption-sub {
-      font-size: 12px;
-      color: var(--text-secondary);
-    }
-
-    /* Text styles */
-    .text-secondary {
-      color: var(--text-secondary);
-    }
-
-    .text-small {
-      font-size: 13px;
-    }
-
-    .text-xs {
-      font-size: 12px;
-    }
-
-    .text-bold {
-      font-weight: 600;
-    }
-
-    p {
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--accent);
       margin-bottom: 12px;
+    }
+
+    .flight-route {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .flight-detail {
+      font-size: 13px;
       color: var(--text-secondary);
-      font-size: 14px;
+      margin-bottom: 4px;
     }
 
-    p:last-child {
-      margin-bottom: 0;
-    }
-
-    /* Divider */
-    .divider {
+    .flight-divider {
       height: 1px;
       background: var(--border);
-      margin: 32px 0;
+      margin: 12px 0;
     }
 
     /* Table */
-    .table-wrapper {
+    .table-wrap {
       overflow-x: auto;
       border: 1px solid var(--border);
       border-radius: var(--radius);
+      margin: 24px 0;
     }
 
     table {
@@ -412,908 +446,740 @@
     }
 
     th {
-      background: var(--bg-elevated);
-      padding: 12px 14px;
+      background: var(--bg-muted);
+      padding: 10px 14px;
       text-align: left;
       font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
       border-bottom: 1px solid var(--border);
-      white-space: nowrap;
     }
 
     td {
-      padding: 12px 14px;
+      padding: 10px 14px;
       border-bottom: 1px solid var(--border);
       color: var(--text-secondary);
     }
 
-    tr:nth-child(even) {
-      background: var(--bg-secondary);
-    }
-
-    tr:last-child td {
-      border-bottom: none;
-    }
+    tr:last-child td { border-bottom: none; }
 
     /* Callout */
     .callout {
-      background: var(--accent-soft);
+      background: var(--accent-muted);
       border-left: 3px solid var(--accent);
       border-radius: var(--radius-sm);
       padding: 16px 20px;
-    }
-
-    .callout.success {
-      background: rgba(34, 197, 94, 0.1);
-      border-left-color: var(--success);
-    }
-
-    .callout-title {
-      font-weight: 600;
-      font-size: 14px;
-      margin-bottom: 6px;
-      color: var(--text-primary);
+      margin: 24px 0;
     }
 
     .callout p {
-      margin: 0;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    /* Lists */
+    .checklist {
+      list-style: none;
+      padding: 0;
+    }
+
+    .checklist li {
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    .checklist li:last-child { border-bottom: none; }
+
+    /* FAQ */
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .faq-item:last-child { border-bottom: none; }
+
+    .faq-item summary {
+      padding: 16px 0;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .faq-item summary::-webkit-details-marker { display: none; }
+
+    .faq-item summary::after {
+      content: '+';
+      font-size: 18px;
+      font-weight: 300;
+      color: var(--text-tertiary);
+      transition: transform var(--transition);
+      flex-shrink: 0;
+    }
+
+    .faq-item[open] summary::after {
+      content: '−';
+    }
+
+    .faq-a {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      padding-bottom: 16px;
     }
 
     /* Footer */
     .footer {
+      padding: 60px 0;
       text-align: center;
-      padding: 32px 0;
-      color: var(--text-tertiary);
-      font-size: 13px;
+      border-top: 1px solid var(--border);
     }
 
-    /* Experience cards */
-    .experience-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-    }
-
-    .experience-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-
-    .experience-title {
-      font-size: 15px;
-      font-weight: 600;
-    }
-
-    .experience-location {
-      font-size: 12px;
+    .footer-text {
+      font-size: 14px;
       color: var(--text-tertiary);
     }
 
-    .stack {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+    /* Responsive */
+    @media (max-width: 600px) {
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .card-grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 28px; }
+      .theme-toggle { top: 12px; right: 12px; }
+      .gallery-item { flex: 0 0 90%; }
+      .img-duo { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
+  <!-- Theme Toggle -->
+  <div class="theme-toggle">
+    <button class="theme-btn" data-theme="light" aria-label="Light mode">☀️</button>
+    <button class="theme-btn active" data-theme="dark" aria-label="Dark mode">🌙</button>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="#guangzhou" class="nav-link">Guangzhou</a>
+      <a href="#yangshuo" class="nav-link">Yangshuo</a>
+      <a href="#chengdu" class="nav-link">Chengdu</a>
+      <a href="#jiuzhaigou" class="nav-link">Jiuzhaigou</a>
+      <a href="#chongqing" class="nav-link">Chongqing</a>
+      <a href="#zhangjiajie" class="nav-link">Zhangjiajie</a>
+      <a href="#shenzhen" class="nav-link">Shenzhen</a>
+      <a href="#itinerary" class="nav-link">Itinerary</a>
+      <a href="#food" class="nav-link">Food</a>
+      <a href="#budget" class="nav-link">Budget</a>
+    </div>
+  </nav>
+
   <div class="container">
     <!-- Hero -->
-    <div class="hero">
-      <img 
-        src="https://images.pexels.com/photos/34683483/pexels-photo-34683483.jpeg?auto=compress&cs=tinysrgb&w=1200" 
-        alt="Zhangjiajie Avatar Mountains sandstone pillars" 
-        class="hero-image"
-      >
-      <div class="hero-overlay">
-        <div class="hero-date">Oct 15 – Oct 31, 2026</div>
-        <h1 class="hero-title">China: Our Adventure Awaits</h1>
-        <div class="hero-subtitle">Aman + Needhi — 16 days, 7 cities, infinite memories</div>
+    <header class="hero">
+      <div class="hero-label">Oct 15 – Oct 31, 2026</div>
+      <h1>China: Our Adventure Awaits</h1>
+      <p class="hero-sub">Aman + Needhi — 16 days, 7 cities, infinite memories</p>
+      <div class="hero-image">
+        <img src="https://images.pexels.com/photos/34683483/pexels-photo-34683483.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Zhangjiajie sandstone pillars rising through clouds">
       </div>
-    </div>
-
-    <!-- Sticky Navigation -->
-    <div class="sticky-nav">
-      <div class="nav-links">
-        <a href="#guangzhou" class="nav-link">🛬 Guangzhou</a>
-        <a href="#yangshuo" class="nav-link">⛰️ Yangshuo</a>
-        <a href="#chengdu" class="nav-link">🐼 Chengdu</a>
-        <a href="#jiuzhaigou" class="nav-link">🏔️ Jiuzhaigou</a>
-        <a href="#chongqing" class="nav-link">🌃 Chongqing</a>
-        <a href="#zhangjiajie" class="nav-link">🎬 Zhangjiajie</a>
-        <a href="#shenzhen" class="nav-link">🏙️ Shenzhen</a>
-        <a href="#itinerary" class="nav-link">📅 Itinerary</a>
-        <a href="#food" class="nav-link">🍜 Food</a>
-        <a href="#shopping" class="nav-link">🛍️ Shopping</a>
-      </div>
-    </div>
-
-    <!-- City Pills -->
-    <div class="pills">
-      <a href="#guangzhou" class="pill">Guangzhou</a>
-      <a href="#yangshuo" class="pill">Yangshuo</a>
-      <a href="#chengdu" class="pill">Chengdu</a>
-      <a href="#jiuzhaigou" class="pill">Jiuzhaigou</a>
-      <a href="#chongqing" class="pill">Chongqing</a>
-      <a href="#zhangjiajie" class="pill">Zhangjiajie</a>
-      <a href="#shenzhen" class="pill">Shenzhen</a>
-    </div>
+    </header>
 
     <!-- Stats -->
-    <div class="stats-grid">
-      <div class="stat">
-        <div class="stat-value">16</div>
-        <div class="stat-label">Days</div>
-      </div>
-      <div class="stat">
-        <div class="stat-value accent">7</div>
-        <div class="stat-label">Cities</div>
-      </div>
-      <div class="stat">
-        <div class="stat-value">5</div>
-        <div class="stat-label">HSR Trains</div>
-      </div>
-      <div class="stat">
-        <div class="stat-value success">2</div>
-        <div class="stat-label">Travelers</div>
-      </div>
+    <div class="stats">
+      <div class="stat"><div class="stat-value">16</div><div class="stat-label">Days</div></div>
+      <div class="stat"><div class="stat-value">7</div><div class="stat-label">Cities</div></div>
+      <div class="stat"><div class="stat-value">5</div><div class="stat-label">Trains</div></div>
+      <div class="stat"><div class="stat-value">2</div><div class="stat-label">Travelers</div></div>
     </div>
 
     <!-- Flights -->
-    <div class="section">
-      <h2>Flights — Singapore Airlines</h2>
-      <p class="section-subtitle">Booking Ref: EQGCEW — via Singapore Changi</p>
-      
-      <div class="grid-2">
-        <div class="card">
-          <div class="card-header">
-            <span>BLR → Guangzhou</span>
-            <span class="pill pill-sm">Outbound</span>
-          </div>
-          <div class="card-body">
-            <div class="card-row">
-              <span class="text-bold">SQ511 — A350-900</span>
-              <span class="text-secondary text-small">Thu, Oct 15</span>
-            </div>
-            <p>Bengaluru 23:05 → Singapore 06:10 (+1)</p>
-            <div class="divider" style="margin: 12px 0;"></div>
-            <div class="card-row">
-              <span class="text-bold">SQ850 — Boeing 787</span>
-              <span class="text-secondary text-small">Fri, Oct 16</span>
-            </div>
-            <p>Singapore 08:00 → Guangzhou 12:10</p>
-          </div>
-        </div>
+    <section class="section">
+      <div class="section-label">Flights</div>
+      <h2>Singapore Airlines</h2>
+      <p class="section-desc">Booking Ref: EQGCEW — via Singapore Changi</p>
 
-        <div class="card">
-          <div class="card-header">
-            <span>Guangzhou → BLR</span>
-            <span class="pill pill-sm">Return</span>
-          </div>
-          <div class="card-body">
-            <div class="card-row">
-              <span class="text-bold">SQ851 — Boeing 787</span>
-              <span class="text-secondary text-small">Sat, Oct 31</span>
-            </div>
-            <p>Guangzhou 13:30 → Singapore 17:50</p>
-            <div class="divider" style="margin: 12px 0;"></div>
-            <div class="card-row">
-              <span class="text-bold">SQ510 — A350-900</span>
-              <span class="text-secondary text-small">Sat, Oct 31</span>
-            </div>
-            <p>Singapore 20:00 → Bengaluru 21:50</p>
-          </div>
+      <div class="card-grid">
+        <div class="flight-card">
+          <div class="flight-label">Outbound</div>
+          <div class="flight-route">BLR → Guangzhou</div>
+          <div class="flight-detail">SQ511 · A350-900 · Thu, Oct 15</div>
+          <div class="flight-detail">Bengaluru 23:05 → Singapore 06:10 (+1)</div>
+          <div class="flight-divider"></div>
+          <div class="flight-detail">SQ850 · Boeing 787 · Fri, Oct 16</div>
+          <div class="flight-detail">Singapore 08:00 → Guangzhou 12:10</div>
+        </div>
+        <div class="flight-card">
+          <div class="flight-label">Return</div>
+          <div class="flight-route">Guangzhou → BLR</div>
+          <div class="flight-detail">SQ851 · Boeing 787 · Sat, Oct 31</div>
+          <div class="flight-detail">Guangzhou 13:30 → Singapore 17:50</div>
+          <div class="flight-divider"></div>
+          <div class="flight-detail">SQ510 · A350-900 · Sat, Oct 31</div>
+          <div class="flight-detail">Singapore 20:00 → Bengaluru 21:50</div>
         </div>
       </div>
-    </div>
-
-    <div class="divider"></div>
+    </section>
 
     <!-- GUANGZHOU -->
-    <div class="section" id="guangzhou">
-      <h2>🛬 Guangzhou — Arrival Day</h2>
-      <p class="section-subtitle">✈️ Arrive 12:10 from Singapore • Oct 16</p>
-      
-      <div class="grid-2">
-        <img 
-          src="https://images.pexels.com/photos/27636215/pexels-photo-27636215.jpeg?auto=compress&cs=tinysrgb&w=600" 
-          alt="Guangzhou humanistic street photography"
-          class="img-rounded"
-        >
-        <img 
-          src="https://images.pexels.com/photos/28035530/pexels-photo-28035530.jpeg?auto=compress&cs=tinysrgb&w=600" 
-          alt="Guangzhou Pearl River skyline boat"
-          class="img-rounded"
-        >
+    <section class="section" id="guangzhou">
+      <div class="section-label">Day 1 · Oct 16</div>
+      <h2>Guangzhou — Arrival Day</h2>
+      <p class="section-desc">Arrive 12:10 from Singapore. Dim sum capital of the world.</p>
+
+      <div class="img-duo">
+        <img src="https://images.pexels.com/photos/27636215/pexels-photo-27636215.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Guangzhou street scene">
+        <img src="https://images.pexels.com/photos/28035530/pexels-photo-28035530.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Pearl River skyline at dusk">
       </div>
 
-      <div class="stack" style="margin-top: 16px;">
-        <h3>🎯 First Day Game Plan</h3>
-        <p>Land at Baiyun Airport at 12:10, clear customs, grab SIM cards, and head to the hotel. You've got a relaxed afternoon and evening to explore before the morning train to Yangshuo tomorrow.</p>
-        
-        <h3>🏨 Where We Stay</h3>
-        <p><strong>LangYue Hotel (Hedong East Subway Station)</strong> — No. 10 Fulu Street, Liwan District. Opened 2025, clean rooms with projection screens, near metro. Alternative: Banana Fun Hotel near Ergong Subway Station, Haizhu District.</p>
-        
-        <h3>🍜 Dim Sum Dinner</h3>
-        <p>Guangzhou = birthplace of dim sum. Head to <strong>Diǎn Dū Dé (点都德)</strong> for the most authentic har gow, siu mai, char siu bao, and rice rolls you'll ever taste. Budget about ¥80-100/person for a feast.</p>
-        
-        <h3>🚶 Beijing Road Walking Street</h3>
-        <p>A 500m pedestrian shopping street with ancient glass-covered ruins beneath your feet — 2,000-year-old road foundations preserved under transparent panels. Great for snacks, tea, and getting your first taste of Chinese urban energy. The area dates back to the Tang Dynasty and is one of Guangzhou's oldest commercial districts.</p>
-      </div>
+      <h3>First Day Plan</h3>
+      <p>Land at Baiyun Airport at 12:10, clear customs, grab SIM cards, head to hotel. Relaxed afternoon and evening to explore before the morning train to Yangshuo.</p>
 
-      <div class="grid-3" style="margin-top: 16px;">
-        <div>
-          <img src="https://images.pexels.com/photos/29529568/pexels-photo-29529568.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Dim sum dumplings" class="img-rounded">
-          <div class="img-caption"><div class="img-caption-title">Dim Sum</div><div class="img-caption-sub">Birthplace of yum cha</div></div>
-        </div>
-        <div>
-          <img src="https://images.pexels.com/photos/7287689/pexels-photo-7287689.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Steamed dumplings" class="img-rounded">
-          <div class="img-caption"><div class="img-caption-title">Har Gow</div><div class="img-caption-sub">Crystal shrimp dumpling</div></div>
-        </div>
-        <div>
-          <img src="https://images.pexels.com/photos/8093867/pexels-photo-8093867.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Chef preparing dumplings" class="img-rounded">
-          <div class="img-caption"><div class="img-caption-title">Fresh Made</div><div class="img-caption-sub">Handcrafted daily</div></div>
-        </div>
-      </div>
+      <h3>Where We Stay</h3>
+      <p><strong>LangYue Hotel</strong> — No. 10 Fulu Street, Liwan District (Hedong East Metro). Opened 2025, clean rooms with projection screens. Alternative: Banana Fun Hotel near Ergong Metro, Haizhu District.</p>
 
-      <div class="callout" style="margin-top: 20px;">
-        <p>🚄 <strong>Next Morning (Oct 17):</strong> HSR from Guangzhou to Yangshuo (09:00 → 11:30, ~2.5h). Book tickets on Trip.com or 12306 app. Second class is comfortable and spacious.</p>
-      </div>
-    </div>
+      <h3>Dim Sum Dinner</h3>
+      <p><strong>Diǎn Dū Dé (点都德)</strong> — the most authentic har gow, siu mai, char siu bao, and rice rolls you'll taste. Budget ¥80-100/person.</p>
 
-    <div class="divider"></div>
+      <h3>Beijing Road Walking Street</h3>
+      <p>500m pedestrian street with ancient ruins beneath glass panels — 2,000-year-old road foundations from the Tang Dynasty. Snacks, tea, urban energy.</p>
+
+      <!-- Dim sum gallery — swipeable -->
+      <div class="gallery">
+        <figure class="gallery-item">
+          <img src="https://images.pexels.com/photos/29529568/pexels-photo-29529568.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Dim sum dumplings in bamboo steamers">
+          <figcaption>Dim Sum — Birthplace of yum cha</figcaption>
+        </figure>
+        <figure class="gallery-item">
+          <img src="https://images.pexels.com/photos/7287689/pexels-photo-7287689.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Crystal shrimp dumplings har gow">
+          <figcaption>Har Gow — Crystal shrimp dumplings</figcaption>
+        </figure>
+        <figure class="gallery-item">
+          <img src="https://images.pexels.com/photos/8093867/pexels-photo-8093867.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Chef preparing fresh dumplings by hand">
+          <figcaption>Fresh Made — Handcrafted daily</figcaption>
+        </figure>
+      </div>
+      <p class="gallery-hint">← Swipe to explore →</p>
+
+      <div class="callout">
+        <p><strong>Next morning (Oct 17):</strong> HSR Guangzhou → Yangshuo, 09:00 → 11:30 (~2.5h). Book on Trip.com or 12306 app. Second class is spacious.</p>
+      </div>
+    </section>
 
     <!-- YANGSHUO -->
-    <div class="section" id="yangshuo">
-      <h2>⛰️ Yangshuo — Karst Paradise</h2>
-      <p class="section-subtitle">🚄 HSR Guangzhou 09:00 → Yangshuo 11:30 • Oct 17-18</p>
-      
-      <div class="grid-2">
-        <img 
-          src="https://images.pexels.com/photos/36535023/pexels-photo-36535023.jpeg?auto=compress&cs=tinysrgb&w=600" 
-          alt="Aerial view of karst mountains Guilin Yangshuo"
-          class="img-rounded"
-        >
-        <img 
-          src="https://images.pexels.com/photos/6713735/pexels-photo-6713735.jpeg?auto=compress&cs=tinysrgb&w=600" 
-          alt="Longji Rice Terraces Guilin"
-          class="img-rounded"
-        >
+    <section class="section" id="yangshuo">
+      <div class="section-label">Days 2–3 · Oct 17–18</div>
+      <h2>Yangshuo — Karst Paradise</h2>
+      <p class="section-desc">HSR Guangzhou 09:00 → Yangshuo 11:30</p>
+
+      <img class="img-feature" src="https://images.pexels.com/photos/36535023/pexels-photo-36535023.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Aerial view of karst mountains and Li River winding through valleys">
+
+      <h3>Where We Stay</h3>
+      <p><strong>West Street (Xi Jie) area</strong> — Heart of Yangshuo's traveler scene. Cobblestone streets, cafes, bars. Close to the action but expect noise at night.</p>
+
+      <h3>Day 1 — Countryside E-bike Ride</h3>
+      <p>Pedal through the <strong>Ten-Mile Gallery</strong> as karst peaks tower on both sides. Yulong River winds alongside rice paddies — ancient stone bridges, local farmers. Rent e-bike for ¥50-80/day. Best in late afternoon when light turns golden.</p>
+
+      <h3>Day 2 — Li River Bamboo Rafting</h3>
+      <p>Drift through the <strong>Xingping section</strong> — the exact landscape on the Chinese 20 yuan note. 1.5-hour ride through dramatic gorges with cormorant fishermen. Then climb <strong>Laozhai Hill</strong> (20 min, 1,500 steps) for a 360° panorama of peaks in mist.</p>
+
+      <img class="img-feature" src="https://images.pexels.com/photos/36398292/pexels-photo-36398292.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Traditional fisherman with cormorant on Li River at golden hour">
+
+      <div class="img-duo">
+        <img src="https://images.pexels.com/photos/6713735/pexels-photo-6713735.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Longji rice terraces cascading down mountain">
+        <img src="https://images.pexels.com/photos/36535023/pexels-photo-36535023.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Karst peaks at sunset">
       </div>
-
-      <div class="stack" style="margin-top: 16px;">
-        <h3>🏨 Where We Stay</h3>
-        <p><strong>West Street (Xi Jie) area</strong> — The heart of Yangshuo's backpacker scene. Cobblestone streets lined with cafes, bars, and shops. Stay close to the action but expect noise at night.</p>
-        
-        <h3>Day 1 (Oct 17) — Countryside E-bike Ride</h3>
-        <p>Pedal through the <strong>Ten-Mile Gallery</strong> as karst peaks tower on both sides. The Yulong River winds alongside rice paddies — you'll pass ancient stone bridges and local farmers tending their fields. Rent an e-bike for ¥50-80/day from West Street. Best time: late afternoon when the light turns golden and mist settles between the peaks.</p>
-        
-        <h3>Day 2 (Oct 18) — Li River Bamboo Rafting</h3>
-        <p>Drift on a traditional bamboo raft through the <strong>Xingping section</strong> — the exact landscape printed on the Chinese 20 yuan note. The 1.5-hour ride passes through dramatic gorges with cormorant fishermen and water buffalo along the banks. Afterward, climb <strong>Laozhai Hill</strong> (20 mins up, 1,500 steps) for a 360° panorama of peaks disappearing into mist. Evening: West Street dinner before the morning train to Chengdu.</p>
-      </div>
-
-      <img 
-        src="https://images.pexels.com/photos/36398292/pexels-photo-36398292.jpeg?auto=compress&cs=tinysrgb&w=1200" 
-        alt="Traditional fisherman on bamboo raft Li River Guilin"
-        class="img-banner"
-      >
-    </div>
-
-    <div class="divider"></div>
+    </section>
 
     <!-- CHENGDU -->
-    <div class="section" id="chengdu">
-      <h2>🐼 Chengdu — Pandas, Tea & Spice</h2>
-      <p class="section-subtitle">🚄 HSR from Yangshuo (5.5h) • Oct 19-22</p>
-      
-      <div class="grid-2">
-        <img 
-          src="https://images.pexels.com/photos/31639676/pexels-photo-31639676.jpeg?auto=compress&cs=tinysrgb&w=600" 
-          alt="Giant panda eating bamboo Chengdu"
-          class="img-rounded"
-        >
-        <img 
-          src="https://images.pexels.com/photos/7846181/pexels-photo-7846181.jpeg?auto=compress&cs=tinysrgb&w=600" 
-          alt="Traditional Chinese tea house pagoda"
-          class="img-rounded"
-        >
-      </div>
+    <section class="section" id="chengdu">
+      <div class="section-label">Days 4–7 · Oct 19–22</div>
+      <h2>Chengdu — Pandas, Tea & Spice</h2>
+      <p class="section-desc">HSR from Yangshuo (5.5h)</p>
 
-      <div class="stack" style="margin-top: 16px;">
-        <h3>Giant Panda Research Base</h3>
-        <p>Watch baby pandas tumble off logs, play-fight their siblings, and nap draped over tree branches. The morning session (before 10 AM) is when the cubs are most active. This alone makes Chengdu unforgettable.</p>
-        
-        <h3>People's Park & Kuanzhai Alley</h3>
-        <p>Sip jasmine tea in a bamboo chair while locals practice tai chi around you. Then wander the restored Qing-dynasty lanes of Kuanzhai Alley — snack stalls, face-changing opera performers, and Sichuan pepper everything.</p>
-        
-        <h3>Chunxi Road — Neon Nights</h3>
-        <p>Chengdu's Times Square. A vibrant pedestrian street packed with flagship stores, street performers, and endless food options. Best at night when the neon signs light up. Great for shopping and people-watching.</p>
-      </div>
+      <img class="img-feature" src="https://images.pexels.com/photos/31639676/pexels-photo-31639676.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Giant panda eating bamboo in lush greenery">
 
-      <div class="grid-3" style="margin-top: 16px;">
-        <div>
-          <img src="https://images.pexels.com/photos/34618075/pexels-photo-34618075.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Mapo tofu" class="img-rounded">
-          <div class="img-caption"><div class="img-caption-title">Mapo Tofu</div><div class="img-caption-sub">Numbing & spicy</div></div>
-        </div>
-        <div>
-          <img src="https://images.pexels.com/photos/35629395/pexels-photo-35629395.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Chengdu nightlife street" class="img-rounded">
-          <div class="img-caption"><div class="img-caption-title">Chunxi Road</div><div class="img-caption-sub">Neon nights</div></div>
-        </div>
-        <div>
-          <img src="https://images.pexels.com/photos/31804425/pexels-photo-31804425.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Chinese tea set" class="img-rounded">
-          <div class="img-caption"><div class="img-caption-title">Tea Ceremony</div><div class="img-caption-sub">People's Park</div></div>
-        </div>
-      </div>
-    </div>
+      <h3>Giant Panda Research Base</h3>
+      <p>Baby pandas tumbling off logs, play-fighting siblings, napping in trees. Morning session (before 10 AM) is when cubs are most active. This alone makes Chengdu unforgettable.</p>
 
-    <div class="divider"></div>
+      <h3>People's Park & Kuanzhai Alley</h3>
+      <p>Sip jasmine tea in a bamboo chair while locals practice tai chi. Wander restored Qing-dynasty lanes — snack stalls, face-changing opera performers, Sichuan pepper everything.</p>
+
+      <h3>Chunxi Road — Neon Nights</h3>
+      <p>Chengdu's Times Square. Pedestrian street packed with flagship stores, street performers, endless food. Best at night when neon signs glow.</p>
+
+      <div class="gallery">
+        <figure class="gallery-item">
+          <img src="https://images.pexels.com/photos/34618075/pexels-photo-34618075.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Mapo tofu with chili oil and numbing peppercorns">
+          <figcaption>Mapo Tofu — Numbing & spicy</figcaption>
+        </figure>
+        <figure class="gallery-item">
+          <img src="https://images.pexels.com/photos/35629395/pexels-photo-35629395.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Neon-lit street scene in Chengdu at night">
+          <figcaption>Chunxi Road — Neon nights</figcaption>
+        </figure>
+        <figure class="gallery-item">
+          <img src="https://images.pexels.com/photos/7846181/pexels-photo-7846181.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Traditional pagoda with ornate details">
+          <figcaption>Tea House — People's Park</figcaption>
+        </figure>
+        <figure class="gallery-item">
+          <img src="https://images.pexels.com/photos/31804425/pexels-photo-31804425.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Chinese tea ceremony setup">
+          <figcaption>Tea Ceremony — Jasmine & oolong</figcaption>
+        </figure>
+      </div>
+      <p class="gallery-hint">← Swipe to explore →</p>
+    </section>
 
     <!-- JIUZHAIGOU -->
-    <div class="section" id="jiuzhaigou">
-      <h2>🏔️ Jiuzhaigou — Valley of Nine Villages</h2>
-      <p class="section-subtitle">🚄 HSR from Chengdu • Oct 20-21 (whirlwind trip!)</p>
-      
-      <!-- Large banner image -->
-      <img 
-        src="https://images.pexels.com/photos/37302353/pexels-photo-37302353.jpeg?auto=compress&cs=tinysrgb&w=1200" 
-        alt="Jiuzhaigou Valley autumn reflection"
-        class="img-banner"
-        style="margin-bottom: 20px;"
-      >
-      
-      <div class="grid-3">
-        <img 
-          src="https://images.pexels.com/photos/37302361/pexels-photo-37302361.jpeg?auto=compress&cs=tinysrgb&w=600" 
-          alt="Jiuzhaigou autumn lake"
-          class="img-rounded"
-        >
-        <img 
-          src="https://images.pexels.com/photos/37302358/pexels-photo-37302358.jpeg?auto=compress&cs=tinysrgb&w=600" 
-          alt="Jiuzhaigou autumn colors reflection"
-          class="img-rounded"
-        >
-        <img 
-          src="https://images.pexels.com/photos/37302353/pexels-photo-37302353.jpeg?auto=compress&cs=tinysrgb&w=600" 
-          alt="Jiuzhaigou valley scenic"
-          class="img-rounded"
-        >
+    <section class="section" id="jiuzhaigou">
+      <div class="section-label">Days 5–6 · Oct 20–21</div>
+      <h2>Jiuzhaigou — Valley of Nine Villages</h2>
+      <p class="section-desc">HSR from Chengdu (~2.5h). Peak autumn foliage.</p>
+
+      <img class="img-feature" src="https://images.pexels.com/photos/37302353/pexels-photo-37302353.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Jiuzhaigou valley with turquoise lake reflecting golden autumn trees">
+
+      <div class="gallery">
+        <figure class="gallery-item">
+          <img src="https://images.pexels.com/photos/37302361/pexels-photo-37302361.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Crystal blue lake surrounded by autumn forest">
+          <figcaption>Five Flower Lake — Submerged trees in turquoise</figcaption>
+        </figure>
+        <figure class="gallery-item">
+          <img src="https://images.pexels.com/photos/37302353/pexels-photo-37302353.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Scenic autumn reflection in Jiuzhaigou Valley with turquoise water and golden foliage">
+          <figcaption>Autumn Reflections — Turquoise water meets golden foliage</figcaption>
+        </figure>
+        <figure class="gallery-item">
+          <img src="https://images.pexels.com/photos/37302358/pexels-photo-37302358.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Colorful autumn trees reflected in crystal clear lake">
+          <figcaption>Rize Valley — Golden canopy over emerald water</figcaption>
+        </figure>
+      </div>
+      <p class="gallery-hint">← Swipe to explore →</p>
+
+      <h3>Getting There (Oct 20)</h3>
+      <p><strong>Morning:</strong> People's Park tea, Kuanzhai Alley, hotpot lunch. <strong>Afternoon:</strong> HSR Chengdu → Jiuhuang (16:02–18:27). Shuttle bus or taxi (45 min) to park entrance.</p>
+
+      <h3>Where We Stay</h3>
+      <p><strong>Lavande Hotel (Jiuzhaigou Tourist Center)</strong> — Huodiba, Longkang Village. Rating 9.5/10. Walking distance to park entrance. Bianbian Street nearby for food.</p>
+
+      <h3>The Y-Shaped Valley Strategy (Oct 21)</h3>
+      <p><strong>Pro tip:</strong> Take shuttle to the TOP of Rize Valley first (Long Lake), walk DOWN through highlights. Saves energy, fewer crowds. Park covers 72,000 hectares — use shuttles.</p>
+      <p><strong>Must-see route:</strong> Long Lake → Five Flower Lake (submerged trees in turquoise water) → Pearl Shoal Waterfall → Mirror Lake → Nuorilang Waterfall (China's widest) → Shuzheng Valley if time permits.</p>
+
+      <div class="callout">
+        <p><strong>October = peak autumn foliage.</strong> Golden leaves reflecting in crystal-clear water. Arrive at 8 AM — lakes are most mirror-like before crowds stir the water.</p>
       </div>
 
-      <div class="stack" style="margin-top: 16px;">
-        <h3>🚄 Getting There (Oct 20)</h3>
-        <p><strong>Morning:</strong> People's Park tea, Kuanzhai Alley, quick hotpot lunch. <strong>Afternoon:</strong> HSR Chengdu → Jiuhuang (16:02-18:27 or 14:39-16:49, ~2.5h). From the station, shuttle bus or taxi (45 min) to the park entrance area.</p>
-        
-        <h3>🏨 Where We Stay</h3>
-        <p><strong>Lavande Hotel (Jiuzhaigou Tourist Center)</strong> — Huodiba, Longkang Village, Zhangzha Town. Rating 9.5/10. Right next to Guoda car park, walking distance to park entrance. Bianbian Street nearby for food. Free parking, service robots, clean rooms.</p>
-        
-        <h3>🗺️ The Y-Shaped Valley Strategy (Oct 21)</h3>
-        <p>The park has a <strong>Y-shaped layout</strong> with 3 valleys. <strong>Pro tip:</strong> Take the shuttle bus to the TOP of Rize Valley first (Long Lake), then walk DOWN through the highlights. This saves energy and lets you see the best spots with fewer crowds. The park covers 72,000 hectares — you can't walk everything, so use the shuttle buses strategically.</p>
-        
-        <p><strong>Must-see route:</strong> Long Lake → Five Flower Lake (the crown jewel — submerged fallen trees in turquoise water) → Pearl Shoal Waterfall → Mirror Lake → Nuorilang Waterfall (China's widest) → then explore Shuzheng Valley if time permits.</p>
-        
-        <p><strong style="color: var(--accent);">🍂 October = peak autumn foliage. Golden leaves reflecting in crystal-clear water. Arrive at 8 AM when gates open — the lakes are most mirror-like before crowds stir the water.</strong></p>
-        
-        <h3>🚄 Return (Oct 21 Evening)</h3>
-        <p>Full day in the park (08:00-17:00). Evening train back: HSR Jiuhuang → Chengdu (19:00-21:24 or 20:40-22:20 via Songpan). This is a rushed trip — ideally you'd spend 2 nights, but we're making it work!</p>
-      </div>
-    </div>
-
-    <div class="divider"></div>
+      <h3>Return (Oct 21 Evening)</h3>
+      <p>Full day in park (08:00–17:00). Evening train back: HSR Jiuhuang → Chengdu (19:00–21:24).</p>
+    </section>
 
     <!-- CHONGQING -->
-    <div class="section" id="chongqing">
-      <h2>🌃 Chongqing — The Cyberpunk City</h2>
-      <p class="section-subtitle">🚄 HSR Chengdu 09:00 → Chongqing 10:30 • Oct 23-25</p>
-      
-      <div class="grid-2">
-        <img 
-          src="https://images.pexels.com/photos/15561087/pexels-photo-15561087.jpeg?auto=compress&cs=tinysrgb&w=600" 
-          alt="Hongyadong illuminated traditional building Chongqing"
-          class="img-rounded"
-        >
-        <img 
-          src="https://images.pexels.com/photos/32660201/pexels-photo-32660201.jpeg?auto=compress&cs=tinysrgb&w=600" 
-          alt="Futuristic night skyline Chongqing"
-          class="img-rounded"
-        >
+    <section class="section" id="chongqing">
+      <div class="section-label">Days 8–10 · Oct 23–25</div>
+      <h2>Chongqing — The Cyberpunk City</h2>
+      <p class="section-desc">HSR Chengdu 09:00 → Chongqing 10:30</p>
+
+      <img class="img-feature" src="https://images.pexels.com/photos/15561087/pexels-photo-15561087.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Hongyadong illuminated with thousands of golden lanterns at night">
+
+      <h3>Where We Stay</h3>
+      <p><strong>Jiefangbei / Hongyadong area</strong> — Right on top of the action. Holiday Riverview Hotel has views of Qiansimen Bridge, ~$30/night.</p>
+
+      <h3>Day 1 — Qiansimen Bridge, Hongyadong & Jiefangbei</h3>
+      <p><strong>Qiansimen Bridge:</strong> Best elevated view of Chongqing's layered architecture — monorails, skyscrapers rising from cliffs. <strong>Hongyadong:</strong> 11-story building cascading down a cliff. Thousands of golden lanterns at night — straight out of Spirited Away. <strong>Jiefangbei:</strong> Times Square meets Shibuya.</p>
+
+      <h3>Day 2 — Liziba, Shibati & Yangtze Cableway</h3>
+      <p><strong>Liziba:</strong> Monorail passes THROUGH a residential building. Peak Chongqing absurdity. <strong>Shibati (18 Stairs):</strong> Restored historical neighborhood — steep staircases, food alleys, views of the modern skyline. <strong>Yangtze Cableway:</strong> Vintage cable car crossing the river.</p>
+
+      <div class="img-duo">
+        <img src="https://images.pexels.com/photos/32660201/pexels-photo-32660201.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Chongqing futuristic night skyline">
+        <img src="https://images.pexels.com/photos/19775602/pexels-photo-19775602.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Chongqing hotpot restaurant">
       </div>
 
-      <div class="stack" style="margin-top: 16px;">
-        <h3>🏨 Where We Stay</h3>
-        <p><strong>Jiefangbei / Hongyadong area</strong> — Stay right on top of the action. Holiday Riverview Hotel has views of Qiansimen Bridge and costs ~$30/night. The area is busy day and night, but you're in the middle of all the magic.</p>
-        
-        <h3>Day 1 — Qiansimen Bridge, Hongyadong & Jiefangbei</h3>
-        <p><strong>Qiansimen Bridge:</strong> Walk across for the best elevated view of Chongqing's layered architecture — monorails sliding by, skyscrapers rising from cliffs. <strong>Hongyadong:</strong> 11-story building cascading down a cliff. At night, thousands of golden lanterns light up every level — it's straight out of Spirited Away. Enter from street level (top) or river (bottom). <strong>Jiefangbei:</strong> Like Times Square meets Tokyo's Shibuya — giant LED screens, malls, and endless food options.</p>
-        
-        <h3>Day 2 — Liziba, Shibati & Yangtze Cableway</h3>
-        <p><strong>Liziba Monorail Station:</strong> Watch a monorail pass THROUGH a residential building. Peak Chongqing absurdity — there's a purpose-built viewing platform below (20-30 min stop). <strong>Shibati (18 Stairs):</strong> Restored historical neighborhood showing old Chongqing before modernization. Steep staircases, preserved homes, food alleys, coffee shops, and views of the modern skyline. <strong>Yangtze Cableway:</strong> Cross the river in a vintage cable car — incredible city views.</p>
-        
-        <h3>Day 3 — 🏔️ Wulong Karst Day Trip</h3>
-        <p><strong>Getting there:</strong> Metro/Didi to Chongqing East Station → HSR to Wulong South (45 min, new station) → shuttle bus to Tourist Center (45 min, ¥16). <strong>Three Natural Bridges:</strong> Colossal stone arches (Tianlong, Qinglong, Heilong) spanning a misty valley, accessed via futuristic glass elevator. UNESCO site, filming location for Transformers 4 and Curse of the Golden Flower. Walk takes 2-3 hours. <strong>Warning:</strong> Book return train early — popular slots fill up fast!</p>
-      </div>
+      <h3>Day 3 — Wulong Karst Day Trip</h3>
+      <p><strong>Getting there:</strong> HSR to Wulong South (45 min) → shuttle to Tourist Center (45 min, ¥16). <strong>Three Natural Bridges:</strong> Colossal stone arches accessed via glass elevator. UNESCO site, Transformers 4 filming location. Walk takes 2-3 hours. Book return train early — popular slots fill fast.</p>
 
-      <div class="grid-3" style="margin-top: 16px;">
-        <img 
-          src="https://images.pexels.com/photos/5790237/pexels-photo-5790237.jpeg?auto=compress&cs=tinysrgb&w=600" 
-          alt="Wulong Karst valley aerial view"
-          class="img-rounded"
-        >
-        <img 
-          src="https://images.pexels.com/photos/33231949/pexels-photo-33231949.jpeg?auto=compress&cs=tinysrgb&w=600" 
-          alt="Tianmen Mountain natural arch scenic view"
-          class="img-rounded"
-        >
-        <img 
-          src="https://images.pexels.com/photos/37106093/pexels-photo-37106093.jpeg?auto=compress&cs=tinysrgb&w=600" 
-          alt="Traditional Chinese architecture in lush gorge"
-          class="img-rounded"
-        >
+      <div class="gallery gallery-tall">
+        <figure class="gallery-item">
+          <img src="https://images.pexels.com/photos/5790237/pexels-photo-5790237.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Wulong karst valley aerial view with lush greenery">
+          <figcaption>Wulong — Three Natural Bridges from above</figcaption>
+        </figure>
+        <figure class="gallery-item">
+          <img src="https://images.pexels.com/photos/33231949/pexels-photo-33231949.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Massive natural stone arch framing misty valley">
+          <figcaption>Tianlong Bridge — UNESCO World Heritage</figcaption>
+        </figure>
+        <figure class="gallery-item">
+          <img src="https://images.pexels.com/photos/37106093/pexels-photo-37106093.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Traditional architecture nestled in lush green gorge">
+          <figcaption>Valley Floor — Ancient buildings in the gorge</figcaption>
+        </figure>
       </div>
-
-      <div class="grid-2" style="margin-top: 16px;">
-        <div>
-          <img src="https://images.pexels.com/photos/19775602/pexels-photo-19775602.jpeg?auto=compress&cs=tinysrgb&w=400" alt="People at hotpot restaurant" class="img-rounded">
-          <div class="img-caption"><div class="img-caption-title">🌶️ Hotpot</div><div class="img-caption-sub">Nine-grid pot</div></div>
-        </div>
-        <div>
-          <img src="https://images.pexels.com/photos/27277231/pexels-photo-27277231.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Hotpot cooking" class="img-rounded">
-          <div class="img-caption"><div class="img-caption-title">Seafood Pot</div><div class="img-caption-sub">Chongqing style</div></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="divider"></div>
+      <p class="gallery-hint">← Swipe to explore →</p>
+    </section>
 
     <!-- ZHANGJIAJIE -->
-    <div class="section" id="zhangjiajie">
-      <h2>🎬 Zhangjiajie — Avatar's Pandora</h2>
-      <p class="section-subtitle">🚄 HSR from Chongqing (5h) • Oct 26-28</p>
-      
-      <div class="grid-3">
-        <img 
-          src="https://images.pexels.com/photos/32985217/pexels-photo-32985217.jpeg?auto=compress&cs=tinysrgb&w=600" 
-          alt="Zhangjiajie rock formations vertical pillars"
-          class="img-rounded"
-        >
-        <img 
-          src="https://images.pexels.com/photos/33231951/pexels-photo-33231951.jpeg?auto=compress&cs=tinysrgb&w=600" 
-          alt="Tourists on stairway to Tianmen Cave China"
-          class="img-rounded"
-        >
-        <img 
-          src="https://images.pexels.com/photos/34683483/pexels-photo-34683483.jpeg?auto=compress&cs=tinysrgb&w=600" 
-          alt="Zhangjiajie forest park towers"
-          class="img-rounded"
-        >
+    <section class="section" id="zhangjiajie">
+      <div class="section-label">Days 11–13 · Oct 26–28</div>
+      <h2>Zhangjiajie — Avatar's Pandora</h2>
+      <p class="section-desc">HSR from Chongqing (5h). The floating mountains.</p>
+
+      <div class="gallery">
+        <figure class="gallery-item">
+          <img src="https://images.pexels.com/photos/32985217/pexels-photo-32985217.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Vertical sandstone pillars rising from forest into clouds">
+          <figcaption>Avatar Hallelujah Mountain — Inspiration for Pandora</figcaption>
+        </figure>
+        <figure class="gallery-item">
+          <img src="https://images.pexels.com/photos/33231951/pexels-photo-33231951.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Tourists ascending steep stairs toward Tianmen Cave">
+          <figcaption>999 Steps to Heaven's Gate</figcaption>
+        </figure>
+        <figure class="gallery-item">
+          <img src="https://images.pexels.com/photos/34683483/pexels-photo-34683483.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Zhangjiajie forest park sandstone towers at sunset">
+          <figcaption>Tianzi Mountain — Sea of stone pillars</figcaption>
+        </figure>
       </div>
+      <p class="gallery-hint">← Swipe to explore →</p>
 
-      <div class="stack" style="margin-top: 16px;">
-        <h3>🏔️ Avatar Hallelujah Mountain</h3>
-        <p>The real-life inspiration for Pandora's floating mountains. Thousand-meter sandstone pillars wrapped in clouds and clinging vegetation. James Cameron confirmed this was the visual reference for the film. Walking among the peaks feels like another planet.</p>
-        
-        <h3>Bailong Elevator</h3>
-        <p>The world's tallest outdoor elevator — 326 meters up a sheer cliff face in a glass cabin. In 90 seconds you rise from the valley floor to the cloud-wrapped summit plateau. The view on the way up is staggering.</p>
-        
-        <h3>⛩️ Tianmen Mountain — Heaven's Gate</h3>
-        <p>Take the world's longest cable car (7.5 km) from the city center straight up to the peak. Walk the glass skywalk bolted to the cliff face 1,400m above the valley. Then descend 999 steps through the natural arch of Heaven's Gate — a massive hole through the mountain.</p>
-      </div>
+      <h3>Avatar Hallelujah Mountain</h3>
+      <p>The real-life inspiration for Pandora's floating mountains. Thousand-meter sandstone pillars wrapped in clouds. James Cameron confirmed this was the visual reference. Walking among the peaks feels like another planet.</p>
 
-      <img 
-        src="https://images.pexels.com/photos/34902901/pexels-photo-34902901.jpeg?auto=compress&cs=tinysrgb&w=1200" 
-        alt="Tianmen Mountain cable car scene in mist"
-        class="img-tall"
-        style="margin-top: 16px;"
-      >
+      <h3>Bailong Elevator</h3>
+      <p>World's tallest outdoor elevator — 326 meters up a sheer cliff face in a glass cabin. 90 seconds from valley floor to cloud-wrapped summit.</p>
 
-      <div class="stack" style="margin-top: 24px;">
-        <h3>🏯 Day Trip Options: Ancient Towns</h3>
-        <p>The last afternoon can be spent visiting one of China's most beautiful ancient towns. Both are about 2-3 hours from Zhangjiajie. Choose based on your vibe!</p>
-      </div>
+      <h3>Tianmen Mountain — Heaven's Gate</h3>
+      <p>World's longest cable car (7.5 km) from city center to peak. Glass skywalk bolted to cliff face 1,400m up. Descend 999 steps through the natural arch of Heaven's Gate — a massive hole through the mountain.</p>
 
-      <div class="grid-2" style="margin-top: 16px;">
-        <div class="experience-card">
-          <h3 style="color: var(--accent);">🏮 Fenghuang Ancient Town</h3>
-          <p style="color: var(--text-secondary); margin-top: 8px;">The "Phoenix Town" — more popular, more polished. Traditional Miao-style stilt houses line the Tuojiang River. Red lanterns reflect in the water at dusk. Stone bridges, riverside bars, and night markets. Best for: evening ambiance, boat rides, photography.</p>
-          <div class="grid-2" style="margin-top: 12px; gap: 8px;">
-            <img src="https://images.pexels.com/photos/30252160/pexels-photo-30252160.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Fenghuang ancient town aerial" class="img-rounded">
-            <img src="https://images.pexels.com/photos/25000466/pexels-photo-25000466.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Fenghuang bridge illuminated" class="img-rounded">
-          </div>
+      <img class="img-feature" src="https://images.pexels.com/photos/34902901/pexels-photo-34902901.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Tianmen Mountain cable car disappearing into thick mist">
+
+      <h3>Ancient Towns — Choose Your Afternoon</h3>
+      <p>Last afternoon: visit one of China's most beautiful ancient towns, 2-3 hours from Zhangjiajie.</p>
+
+      <div class="card-grid">
+        <div class="card">
+          <img class="card-img" src="https://images.pexels.com/photos/25000466/pexels-photo-25000466.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Fenghuang ancient town bridge illuminated with colorful lights at night">
+          <div class="card-title">Fenghuang Ancient Town</div>
+          <p>The "Phoenix Town" — more popular, more polished. Miao-style stilt houses lining Tuojiang River. Red lanterns reflecting in water at dusk. Riverside bars and night markets.</p>
         </div>
-        
-        <div class="experience-card">
-          <h3 style="color: var(--accent);">🌊 Furong Ancient Town</h3>
-          <p style="color: var(--text-secondary); margin-top: 8px;">The "Hibiscus Town" — less touristy, more dramatic. A 60-meter waterfall crashes through the center of town. Traditional Tujia stilt houses perched on cliff edges. Features in the classic 1980s Chinese film "Hibiscus Town." Best for: waterfall views, authentic feel, fewer crowds.</p>
-          <div class="grid-2" style="margin-top: 12px; gap: 8px;">
-            <img src="https://images.pexels.com/photos/34683504/pexels-photo-34683504.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Furong Town illuminated pagoda waterfront night" class="img-rounded">
-            <img src="https://images.pexels.com/photos/30131349/pexels-photo-30131349.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Traditional houses riverside" class="img-rounded">
-          </div>
+        <div class="card">
+          <img class="card-img" src="https://images.pexels.com/photos/34683504/pexels-photo-34683504.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Furong town illuminated pagoda over waterfall at night">
+          <div class="card-title">Furong Ancient Town</div>
+          <p>The "Hibiscus Town" — less touristy, more dramatic. 60-meter waterfall through town center. Tujia stilt houses on cliff edges. Fewer crowds, authentic feel.</p>
         </div>
       </div>
-    </div>
+    </section>
 
-    <div class="divider"></div>
+    <!-- SHENZHEN -->
+    <section class="section" id="shenzhen">
+      <div class="section-label">Days 14–16 · Oct 29–31</div>
+      <h2>Guangzhou & Shenzhen — Final Days</h2>
+      <p class="section-desc">HSR return (6h) · Shenzhen day trip · Fly home Oct 31</p>
 
-    <!-- GUANGZHOU & SHENZHEN -->
-    <div class="section" id="shenzhen">
-      <h2>✈️ Guangzhou & Shenzhen — Start and Finish</h2>
-      <p class="section-subtitle">✈️ Arrival Oct 16 • 🚄 Return via HSR Oct 29-31</p>
-      
-      <div class="grid-2">
-        <img 
-          src="https://images.pexels.com/photos/32860331/pexels-photo-32860331.jpeg?auto=compress&cs=tinysrgb&w=600" 
-          alt="Dim sum spread in bamboo steamers"
-          class="img-rounded"
-        >
-        <img 
-          src="https://images.pexels.com/photos/34947064/pexels-photo-34947064.jpeg?auto=compress&cs=tinysrgb&w=600" 
-          alt="Shenzhen skyline at night"
-          class="img-rounded"
-        >
+      <div class="img-duo">
+        <img src="https://images.pexels.com/photos/32860331/pexels-photo-32860331.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Dim sum spread in bamboo steamers">
+        <img src="https://images.pexels.com/photos/34947064/pexels-photo-34947064.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Shenzhen skyline at night">
       </div>
 
-      <div class="stack" style="margin-top: 16px;">
-        <h3>Guangzhou — Dim Sum Capital of the World</h3>
-        <p>The birthplace of Cantonese cuisine. Start mornings with yum cha — steaming bamboo baskets of har gow (crystal shrimp dumplings), siu mai, char siu bao, and silky congee. The food alone is worth the stop.</p>
-        
-        <h3>Shenzhen Day Trip (Oct 30)</h3>
-        <p>30 minutes by train from Guangzhou. A futuristic tech city that went from fishing village to megacity in 40 years. OCT-LOFT creative park, Lianhuashan Park for skyline views, and the Futian light show at night.</p>
-      </div>
-    </div>
+      <h3>Guangzhou — Dim Sum Capital</h3>
+      <p>Birthplace of Cantonese cuisine. Mornings with yum cha — bamboo baskets of har gow, siu mai, char siu bao, silky congee. The food alone is worth the stop.</p>
 
-    <div class="divider"></div>
+      <h3>Shenzhen Day Trip (Oct 30)</h3>
+      <p>30 minutes by train from Guangzhou. Fishing village to megacity in 40 years. OCT-LOFT creative park, Lianhuashan Park for skyline views, Futian light show at night.</p>
+    </section>
 
-    <!-- ITINERARY TABLE -->
-    <div class="section" id="itinerary">
-      <h2>📅 Day-by-Day Itinerary</h2>
-      
-      <div class="table-wrapper">
+    <!-- ITINERARY -->
+    <section class="section" id="itinerary">
+      <div class="section-label">Schedule</div>
+      <h2>Day-by-Day Itinerary</h2>
+
+      <div class="table-wrap">
         <table>
           <thead>
-            <tr>
-              <th>Day</th>
-              <th>Date</th>
-              <th>City</th>
-              <th>What We're Doing</th>
-            </tr>
+            <tr><th>Day</th><th>Date</th><th>City</th><th>Plan</th></tr>
           </thead>
           <tbody>
-            <tr><td>1</td><td>Oct 16 (Fri)</td><td>✈️ Guangzhou</td><td>Arrive 12:10 PM. Check into LangYue Hotel. Beijing Road, dim sum dinner.</td></tr>
-            <tr><td>2</td><td>Oct 17 (Sat)</td><td>🚄 Yangshuo</td><td>HSR 09:00→11:30. E-bike Ten-Mile Gallery. West Street dinner.</td></tr>
-            <tr><td>3</td><td>Oct 18 (Sun)</td><td>⛰️ Yangshuo</td><td>Li River bamboo raft (Xingping). Laozhai Hill sunset climb.</td></tr>
-            <tr><td>4</td><td>Oct 19 (Mon)</td><td>🚄 Chengdu</td><td>HSR 08:30→14:20 (5.5h). Chunxi Road neon lights & Sichuan dinner.</td></tr>
-            <tr><td>5</td><td>Oct 20 (Tue)</td><td>🚄 Jiuzhaigou</td><td>Morning: People's Park, Kuanzhai Alley, hotpot. HSR 16:02→18:27 to Jiuhuang.</td></tr>
-            <tr><td>6</td><td>Oct 21 (Wed)</td><td>🏔️ Jiuzhaigou</td><td>08:00 park entry. Full day: Y-valley, Five Flower Lake. HSR 19:00→21:24 back.</td></tr>
-            <tr><td>7</td><td>Oct 22 (Thu)</td><td>🐼 Chengdu</td><td>Panda Base at 8 AM (cubs active!). Jinli Street evening.</td></tr>
-            <tr><td>8</td><td>Oct 23 (Fri)</td><td>🚄 Chongqing</td><td>HSR 09:00→10:30. Qiansimen Bridge, Hongyadong lights after dark.</td></tr>
-            <tr><td>9</td><td>Oct 24 (Sat)</td><td>🌃 Chongqing</td><td>Liziba Monorail, Shibati (18 Stairs), Yangtze Cableway. Hotpot dinner.</td></tr>
-            <tr><td>10</td><td>Oct 25 (Sun)</td><td>🏔️ Wulong</td><td>Day trip: HSR to Wulong South → Three Natural Bridges. Book return early!</td></tr>
-            <tr><td>11</td><td>Oct 26 (Mon)</td><td>🚄 Zhangjiajie</td><td>HSR 08:30→11:00 (2.5h). Golden Whip Stream forest walk.</td></tr>
-            <tr><td>12</td><td>Oct 27 (Tue)</td><td>🎬 Zhangjiajie</td><td>Tianzi Mountain + Avatar Hallelujah peaks + Bailong glass elevator.</td></tr>
-            <tr><td>13</td><td>Oct 28 (Wed)</td><td>⛩️ Zhangjiajie</td><td>Morning: Tianmen Mountain (999 steps). Afternoon: Fenghuang or Furong town.</td></tr>
-            <tr><td>14</td><td>Oct 29 (Thu)</td><td>🚄 Guangzhou</td><td>HSR 09:00→15:00 (6h). Relaxed final evening near airport.</td></tr>
-            <tr><td>15</td><td>Oct 30 (Fri)</td><td>🚄 Shenzhen</td><td>HSR 30 min. OCT-LOFT creative park, Futian light show.</td></tr>
-            <tr><td>16</td><td>Oct 31 (Sat)</td><td>✈️ Home</td><td>Flight CAN 13:30→SIN→BLR 21:50. Singapore Airlines.</td></tr>
+            <tr><td>1</td><td>Oct 16</td><td>Guangzhou</td><td>Arrive 12:10. LangYue Hotel. Beijing Road, dim sum dinner.</td></tr>
+            <tr><td>2</td><td>Oct 17</td><td>Yangshuo</td><td>HSR 09:00→11:30. E-bike Ten-Mile Gallery. West Street dinner.</td></tr>
+            <tr><td>3</td><td>Oct 18</td><td>Yangshuo</td><td>Li River bamboo raft (Xingping). Laozhai Hill sunset.</td></tr>
+            <tr><td>4</td><td>Oct 19</td><td>Chengdu</td><td>HSR 08:30→14:20 (5.5h). Chunxi Road, Sichuan dinner.</td></tr>
+            <tr><td>5</td><td>Oct 20</td><td>Jiuzhaigou</td><td>Morning: People's Park, Kuanzhai Alley, hotpot. HSR 16:02→18:27.</td></tr>
+            <tr><td>6</td><td>Oct 21</td><td>Jiuzhaigou</td><td>08:00 park entry. Y-valley, Five Flower Lake. HSR 19:00→21:24 back.</td></tr>
+            <tr><td>7</td><td>Oct 22</td><td>Chengdu</td><td>Panda Base at 8 AM. Jinli Street evening.</td></tr>
+            <tr><td>8</td><td>Oct 23</td><td>Chongqing</td><td>HSR 09:00→10:30. Qiansimen Bridge, Hongyadong after dark.</td></tr>
+            <tr><td>9</td><td>Oct 24</td><td>Chongqing</td><td>Liziba Monorail, Shibati, Yangtze Cableway. Hotpot dinner.</td></tr>
+            <tr><td>10</td><td>Oct 25</td><td>Wulong</td><td>Day trip: HSR to Wulong South → Three Natural Bridges.</td></tr>
+            <tr><td>11</td><td>Oct 26</td><td>Zhangjiajie</td><td>HSR 08:30→11:00. Golden Whip Stream forest walk.</td></tr>
+            <tr><td>12</td><td>Oct 27</td><td>Zhangjiajie</td><td>Tianzi Mountain + Avatar peaks + Bailong elevator.</td></tr>
+            <tr><td>13</td><td>Oct 28</td><td>Zhangjiajie</td><td>Tianmen Mountain (999 steps). Afternoon: Fenghuang or Furong.</td></tr>
+            <tr><td>14</td><td>Oct 29</td><td>Guangzhou</td><td>HSR 09:00→15:00 (6h). Relaxed evening.</td></tr>
+            <tr><td>15</td><td>Oct 30</td><td>Shenzhen</td><td>HSR 30 min. OCT-LOFT, Futian light show.</td></tr>
+            <tr><td>16</td><td>Oct 31</td><td>Home</td><td>Flight CAN 13:30→SIN→BLR 21:50.</td></tr>
           </tbody>
         </table>
       </div>
-    </div>
+    </section>
 
-    <div class="divider"></div>
+    <!-- FOOD -->
+    <section class="section" id="food">
+      <div class="section-label">Eat</div>
+      <h2>Food We Cannot Miss</h2>
 
-    <!-- FOOD SECTION -->
-    <div class="section" id="food">
-      <h2>🍜 Food We Cannot Miss</h2>
-      
-      <div class="grid-3">
-        <div>
-          <img 
-            src="https://images.pexels.com/photos/29529568/pexels-photo-29529568.jpeg?auto=compress&cs=tinysrgb&w=400" 
-            alt="Dim sum dumplings"
-            class="img-food"
-          >
-          <div class="img-caption">
-            <div class="img-caption-title">Cantonese Dim Sum</div>
-            <div class="img-caption-sub">Guangzhou — morning yum cha ritual</div>
-          </div>
+      <div class="gallery">
+        <figure class="gallery-item">
+          <img src="https://images.pexels.com/photos/29529568/pexels-photo-29529568.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Dim sum dumplings arranged in bamboo steamers">
+          <figcaption>Cantonese Dim Sum · Guangzhou</figcaption>
+        </figure>
+        <figure class="gallery-item">
+          <img src="https://images.pexels.com/photos/36120991/pexels-photo-36120991.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Bubbling Sichuan hotpot with red chili oil">
+          <figcaption>Sichuan Hotpot · Chengdu</figcaption>
+        </figure>
+        <figure class="gallery-item">
+          <img src="https://images.pexels.com/photos/7287689/pexels-photo-7287689.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Delicate steamed soup dumplings">
+          <figcaption>Xiaolongbao · Bite carefully</figcaption>
+        </figure>
+        <figure class="gallery-item">
+          <img src="https://images.pexels.com/photos/34618075/pexels-photo-34618075.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Mapo tofu in clay pot with chili oil">
+          <figcaption>Mapo Tofu · Numbing chili bean curd</figcaption>
+        </figure>
+        <figure class="gallery-item">
+          <img src="https://images.pexels.com/photos/27277231/pexels-photo-27277231.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Nine-grid hotpot with ingredients cooking">
+          <figcaption>Nine-Grid Hotpot · Chongqing</figcaption>
+        </figure>
+        <figure class="gallery-item">
+          <img src="https://images.pexels.com/photos/8093867/pexels-photo-8093867.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Chef folding fresh dumplings by hand">
+          <figcaption>Fresh Made · Watch them roll and fold</figcaption>
+        </figure>
+      </div>
+      <p class="gallery-hint">← Swipe to explore →</p>
+    </section>
+
+    <!-- SHOPPING -->
+    <section class="section">
+      <div class="section-label">Shop</div>
+      <h2>What to Buy in China</h2>
+      <p class="section-desc">Based on Reddit r/travel + r/Chinavisa recommendations</p>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-title">Electronics & Tech</div>
+          <p><strong>DJI drones</strong> — 15-20% cheaper. Flagship stores in Guangzhou and Shenzhen.</p>
+          <p><strong>Xiaomi</strong> — Mi Bands, smart home gadgets at fraction of export prices.</p>
+          <p><strong>Huaqiangbei Market</strong> (Shenzhen) — World's largest electronics market.</p>
+          <p>Skip: iPhones (same price globally), laptops (Chinese keyboard).</p>
         </div>
-        <div>
-          <img 
-            src="https://images.pexels.com/photos/36120991/pexels-photo-36120991.jpeg?auto=compress&cs=tinysrgb&w=400" 
-            alt="Sichuan hotpot"
-            class="img-food"
-          >
-          <div class="img-caption">
-            <div class="img-caption-title">Sichuan Hotpot</div>
-            <div class="img-caption-sub">Chengdu — numbing & spicy split pot</div>
-          </div>
+        <div class="card">
+          <div class="card-title">Fashion & Clothing</div>
+          <p><strong>Silk</strong> — Scarves, pajamas, bedding at great prices.</p>
+          <p><strong>Cashmere</strong> — Inner Mongolia quality. Erdos brand is reliable.</p>
+          <p><strong>Tailored suits</strong> — Custom in 24-48 hours. Shenzhen/Guangzhou markets.</p>
+          <p><strong>Outdoor gear</strong> — Kailas, Toread at 30-50% of Western brands.</p>
         </div>
-        <div>
-          <img 
-            src="https://images.pexels.com/photos/7287689/pexels-photo-7287689.jpeg?auto=compress&cs=tinysrgb&w=400" 
-            alt="Steamed dumplings"
-            class="img-food"
-          >
-          <div class="img-caption">
-            <div class="img-caption-title">Xiaolongbao</div>
-            <div class="img-caption-sub">Soup dumplings — bite carefully!</div>
-          </div>
+        <div class="card">
+          <div class="card-title">Tea & Food</div>
+          <p><strong>Chinese tea</strong> — Longjing, Pu'er, Tieguanyin. Buy from specialty shops.</p>
+          <p><strong>Sichuan peppercorns</strong> — Vacuum-sealed in Chengdu.</p>
+          <p><strong>White Rabbit Candy</strong> — Classic milk candy. Great gifts.</p>
+          <p><strong>Chili oil / Lao Gan Ma</strong> — Stock up. Heavy but worth it.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Culture & Souvenirs</div>
+          <p><strong>Calligraphy brushes</strong> — Lake Pen (Huzhou). Ink stones and rice paper.</p>
+          <p><strong>Jade & pearls</strong> — Only certified shops. Freshwater pearls are affordable.</p>
+          <p><strong>Panda merch</strong> — Official Panda Base shop has quality items.</p>
+          <p><strong>Cloisonné</strong> — Traditional enamel on copper.</p>
         </div>
       </div>
 
-      <div class="grid-3" style="margin-top: 16px;">
-        <div>
-          <img 
-            src="https://images.pexels.com/photos/34618075/pexels-photo-34618075.jpeg?auto=compress&cs=tinysrgb&w=400" 
-            alt="Mapo tofu"
-            class="img-food"
-          >
-          <div class="img-caption">
-            <div class="img-caption-title">Mapo Tofu</div>
-            <div class="img-caption-sub">Chengdu — numbing chili bean curd</div>
-          </div>
-        </div>
-        <div>
-          <img 
-            src="https://images.pexels.com/photos/27277231/pexels-photo-27277231.jpeg?auto=compress&cs=tinysrgb&w=400" 
-            alt="Chongqing hotpot"
-            class="img-food"
-          >
-          <div class="img-caption">
-            <div class="img-caption-title">Chongqing Hotpot</div>
-            <div class="img-caption-sub">Nine-grid pot, fiery spice</div>
-          </div>
-        </div>
-        <div>
-          <img 
-            src="https://images.pexels.com/photos/8093867/pexels-photo-8093867.jpeg?auto=compress&cs=tinysrgb&w=400" 
-            alt="Chef preparing dumplings"
-            class="img-food"
-          >
-          <div class="img-caption">
-            <div class="img-caption-title">Fresh Made</div>
-            <div class="img-caption-sub">Watch them roll and fold</div>
-          </div>
-        </div>
+      <div class="callout">
+        <p><strong>Pro tips:</strong> Bargain in markets (start at 30% asking). Use WeChat Pay for better deals. Keep receipts for expensive items. Declare electronics at customs if over ₹50,000 total.</p>
       </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <!-- SHOPPING SECTION -->
-    <div class="section" id="shopping">
-      <h2>🛍️ What to Buy in China</h2>
-      <p class="section-subtitle">Best buys based on Reddit r/travel + r/Chinavisa recommendations</p>
-      
-      <div class="grid-2">
-        <div class="experience-card">
-          <h3 style="color: var(--accent);">📱 Electronics & Tech</h3>
-          <div class="stack" style="margin-top: 12px;">
-            <p><strong>DJI Drones & Cameras</strong> — 15-20% cheaper than US/India. DJI flagship stores in Guangzhou and Shenzhen. Mini 4 Pro, Osmo Action 5, Pocket 3 are popular picks.</p>
-            <p><strong>Xiaomi Products</strong> — Mi Bands, electric toothbrushes, smart home gadgets at fraction of export prices. Xiaomi Home stores everywhere.</p>
-            <p><strong>Huaqiangbei Market (Shenzhen)</strong> — The world's largest electronics market. Everything from phone accessories to components. Great for cables, chargers, cases.</p>
-            <p><strong>⚠️ Skip:</strong> iPhones (same price globally), laptops (Chinese keyboard layout).</p>
-          </div>
-        </div>
-        
-        <div class="experience-card">
-          <h3 style="color: var(--accent);">👗 Fashion & Clothing</h3>
-          <div class="stack" style="margin-top: 12px;">
-            <p><strong>Silk</strong> — Hangzhou is the silk capital, but Chengdu and Guangzhou have good shops. Scarves, pajamas, bedding at great prices.</p>
-            <p><strong>Cashmere</strong> — Inner Mongolia cashmere is world-class. Look for 100% cashmere sweaters. Erdos brand is reliable.</p>
-            <p><strong>Tailored Suits</strong> — Custom suits in 24-48 hours. Shenzhen and Guangzhou markets have tailors who copy any design.</p>
-            <p><strong>Outdoor Gear</strong> — Local brands (Kailas, Toread) offer quality hiking gear at 30-50% of Western brands.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="grid-2" style="margin-top: 16px;">
-        <div class="experience-card">
-          <h3 style="color: var(--accent);">🍵 Tea & Food</h3>
-          <div class="stack" style="margin-top: 12px;">
-            <p><strong>Chinese Tea</strong> — Longjing (Dragon Well) from Hangzhou, Pu'er from Yunnan, Tieguanyin oolong. Buy from specialty tea shops, not tourist markets.</p>
-            <p><strong>Sichuan Peppercorns</strong> — The numbing spice that defines Sichuan cuisine. Get them vacuum-sealed in Chengdu.</p>
-            <p><strong>White Rabbit Candy</strong> — Classic Chinese milk candy. Nostalgia in a wrapper. Great gifts.</p>
-            <p><strong>Chili Oil / Lao Gan Ma</strong> — Stock up on crispy chili oil. Heavy but worth it.</p>
-          </div>
-        </div>
-        
-        <div class="experience-card">
-          <h3 style="color: var(--accent);">🎨 Culture & Souvenirs</h3>
-          <div class="stack" style="margin-top: 12px;">
-            <p><strong>Chinese Calligraphy Brushes</strong> — Lake Pen brushes (Huzhou) are prized. Also ink stones and rice paper.</p>
-            <p><strong>Cloisonné</strong> — Traditional enamel work on copper. Beijing is famous, but available nationwide.</p>
-            <p><strong>Jade & Pearls</strong> — Only buy from certified shops. Fake jade is everywhere. Freshwater pearls are affordable.</p>
-            <p><strong>Panda Merch</strong> — In Chengdu, the official Panda Base shop has quality items. Skip the random tourist stalls.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="callout" style="margin-top: 20px;">
-        <p>💡 <strong>Pro Tips:</strong> Always bargain in markets (start at 30% of asking price). Use WeChat Pay for better deals. Keep receipts for expensive items. Declare electronics at customs if over ₹50,000 total.</p>
-      </div>
-    </div>
-
-    <div class="divider"></div>
+    </section>
 
     <!-- PRACTICAL INFO -->
-    <div class="section">
+    <section class="section">
+      <div class="section-label">Essentials</div>
       <h2>Practical Info</h2>
-      
-      <div class="grid-2">
+
+      <div class="card-grid">
         <div class="card">
-          <div class="card-header">Weather in October</div>
-          <div class="card-body">
-            <p>South (Guangzhou, Yangshuo): 20-28°C — summer clothes + light layer</p>
-            <p>Central (Chengdu, Chongqing): 15-22°C — comfortable, light jacket</p>
-            <p>Mountains (Jiuzhaigou, Zhangjiajie): 5-15°C — warm fleece + rain jacket</p>
-            <p><strong style="color: var(--text-primary);">October = golden autumn. Peak foliage in mountains.</strong></p>
-          </div>
+          <div class="card-title">Weather in October</div>
+          <p>South (Guangzhou, Yangshuo): 20-28°C — summer + light layer</p>
+          <p>Central (Chengdu, Chongqing): 15-22°C — light jacket</p>
+          <p>Mountains (Jiuzhaigou, Zhangjiajie): 5-15°C — warm fleece + rain jacket</p>
+          <p><strong>October = golden autumn. Peak foliage in mountains.</strong></p>
         </div>
-        
         <div class="card">
-          <div class="card-header">Getting Around</div>
-          <div class="card-body">
-            <p><strong style="color: var(--text-primary);">HSR (High-Speed Rail)</strong></p>
-            <p>Book on Trip.com 15 days ahead. 2nd class is spacious. Trains run on the minute.</p>
-            <p><strong style="color: var(--text-primary);">Local</strong></p>
-            <p>Didi (Chinese Uber) for taxis. Metro in cities. Keep hotel address in Chinese on phone.</p>
-          </div>
+          <div class="card-title">Getting Around</div>
+          <p><strong>HSR:</strong> Book on Trip.com 15 days ahead. 2nd class is spacious. Trains run on the minute.</p>
+          <p><strong>Local:</strong> Didi (Chinese Uber) for taxis. Metro in cities. Keep hotel address in Chinese on phone.</p>
         </div>
-        
         <div class="card">
-          <div class="card-header">Money & Internet</div>
-          <div class="card-body">
-            <p>WeChat Pay / Alipay works everywhere — link international card before trip.</p>
-            <p>Get China Unicom eSIM or Airalo for data.</p>
-            <p>VPN needed for Google/WhatsApp/Instagram. Download offline maps.</p>
-          </div>
+          <div class="card-title">Money & Internet</div>
+          <p>WeChat Pay / Alipay works everywhere — link international card before trip.</p>
+          <p>China Unicom eSIM or Airalo for data.</p>
+          <p>VPN needed for Google/WhatsApp/Instagram. Download offline maps.</p>
         </div>
-        
         <div class="card">
-          <div class="card-header">Pack This</div>
-          <div class="card-body">
-            <p>• Comfortable walking shoes (10k+ steps/day)</p>
-            <p>• Rain jacket (mountains = mist)</p>
-            <p>• Warm fleece for Jiuzhaigou mornings (5°C)</p>
-            <p>• Power bank (long train days)</p>
-            <p>• Passport copies (hotels check at check-in)</p>
-            <p>• Offline Chinese translation app</p>
-          </div>
+          <div class="card-title">Pack List</div>
+          <p>Comfortable walking shoes (10k+ steps/day)</p>
+          <p>Rain jacket (mountains = mist)</p>
+          <p>Warm fleece for Jiuzhaigou mornings (5°C)</p>
+          <p>Power bank, passport copies, offline translation app</p>
         </div>
       </div>
-    </div>
+    </section>
 
-    <div class="divider"></div>
+    <!-- BUCKET LIST -->
+    <section class="section">
+      <div class="section-label">Highlights</div>
+      <h2>Trip Bucket List</h2>
+      <p class="section-desc">The moments that will make this unforgettable</p>
 
-    <!-- BUCKET LIST & HIGHLIGHTS -->
-    <div class="section">
-      <h2>✨ Trip Bucket List — Things We Can't Miss</h2>
-      <p class="section-subtitle">The moments that will make this trip unforgettable</p>
-      
-      <div class="grid-2">
-        <div class="experience-card" style="background: linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%); border-color: var(--accent);">
-          <h3 style="color: var(--accent);">🌅 Once-in-a-Lifetime Moments</h3>
-          <ul style="margin-top: 12px; padding-left: 20px; color: var(--text-secondary);">
-            <li style="margin-bottom: 8px;"><strong>Sunrise at Xingping</strong> — Watch the 20-yuan view emerge from morning mist on the Li River</li>
-            <li style="margin-bottom: 8px;"><strong>Baby Pandas at Play</strong> — Arrive at opening (8 AM) when the cubs are most active</li>
-            <li style="margin-bottom: 8px;"><strong>Bailong Elevator</strong> — 90 seconds straight up a cliff face in glass</li>
-            <li style="margin-bottom: 8px;"><strong>Tianmen Heaven's Gate</strong> — Descend 999 steps through a hole in the mountain</li>
-            <li style="margin-bottom: 8px;"><strong>Chongqing Night Views</strong> — Hongyadong lit up like a Studio Ghibli scene</li>
+      <div class="card-grid">
+        <div class="card" style="border-color: var(--accent);">
+          <div class="card-title" style="color: var(--accent);">Once-in-a-Lifetime</div>
+          <ul class="checklist">
+            <li><strong>Sunrise at Xingping</strong> — 20-yuan view emerging from morning mist</li>
+            <li><strong>Baby Pandas at Play</strong> — Arrive at 8 AM when cubs are most active</li>
+            <li><strong>Bailong Elevator</strong> — 90 seconds straight up a cliff in glass</li>
+            <li><strong>Tianmen Heaven's Gate</strong> — 999 steps through a hole in the mountain</li>
+            <li><strong>Chongqing at Night</strong> — Hongyadong lit like a Studio Ghibli scene</li>
           </ul>
         </div>
-        
-        <div class="experience-card" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%); border-color: var(--success);">
-          <h3 style="color: var(--success);">🎯 Experience Checklist</h3>
-          <ul style="margin-top: 12px; padding-left: 20px; color: var(--text-secondary);">
-            <li style="margin-bottom: 8px;">☐ Order hotpot by pointing at the picture menu</li>
-            <li style="margin-bottom: 8px;">☐ Get a "mala" (numbing-spicy) rating we can handle</li>
-            <li style="margin-bottom: 8px;">☐ Take the Chinese HSR at 350 km/h</li>
-            <li style="margin-bottom: 8px;">☐ Bargain at a market in broken Mandarin</li>
-            <li style="margin-bottom: 8px;">☐ Pay for everything with WeChat face-scan</li>
-            <li style="margin-bottom: 8px;">☐ Walk a glass skywalk without looking down (impossible)</li>
-            <li style="margin-bottom: 8px;">☐ Find the secret dim sum spot locals love</li>
+        <div class="card">
+          <div class="card-title">Experience Checklist</div>
+          <ul class="checklist">
+            <li>Order hotpot by pointing at picture menu</li>
+            <li>Find a mala spice level we can handle</li>
+            <li>Take HSR at 350 km/h</li>
+            <li>Bargain at a market in broken Mandarin</li>
+            <li>Pay for everything with WeChat face-scan</li>
+            <li>Walk a glass skywalk without looking down</li>
+            <li>Find the secret dim sum spot locals love</li>
           </ul>
         </div>
       </div>
-
-      <div class="grid-3" style="margin-top: 16px;">
-        <div class="experience-card">
-          <h3 style="color: var(--accent);">📸 Photo Spots</h3>
-          <ul style="margin-top: 8px; padding-left: 16px; color: var(--text-secondary); font-size: 14px;">
-            <li>Li River bamboo raft</li>
-            <li>Avatar mountains in fog</li>
-            <li>Jiuzhaigou mirror lake</li>
-            <li>Fenghuang night lanterns</li>
-            <li>Chongqing monorail</li>
-          </ul>
-        </div>
-        
-        <div class="experience-card">
-          <h3 style="color: var(--accent);">🎬 Media Prep</h3>
-          <ul style="margin-top: 8px; padding-left: 16px; color: var(--text-secondary); font-size: 14px;">
-            <li>Rewatch <em>Avatar</em></li>
-            <li>Watch <em>Crazy Rich Asians</em> (dim sum scene)</li>
-            <li>Spirited Away (Chongqing vibes)</li>
-            <li>Download Mandarin phrases</li>
-            <li>Save offline maps</li>
-          </ul>
-        </div>
-        
-        <div class="experience-card">
-          <h3 style="color: var(--accent);">🧳 Pack List</h3>
-          <ul style="margin-top: 8px; padding-left: 16px; color: var(--text-secondary); font-size: 14px;">
-            <li>Rain jacket (mountain weather)</li>
-            <li>Comfortable walking shoes</li>
-            <li>Power bank + USB-C cables</li>
-            <li>VPN app pre-installed</li>
-            <li>Motion sickness meds (roads!)</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="divider"></div>
+    </section>
 
     <!-- BUDGET -->
-    <div class="section">
-      <h2>💰 Budget (for both of us)</h2>
-      
-      <div class="stats-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 24px;">
-        <div class="stat">
-          <div class="stat-value">~4L</div>
-          <div class="stat-label">Total (INR)</div>
-        </div>
-        <div class="stat">
-          <div class="stat-value success">1.2L</div>
-          <div class="stat-label">Flights (booked)</div>
-        </div>
-        <div class="stat">
-          <div class="stat-value">1.1L</div>
-          <div class="stat-label">Hotels (15 nights)</div>
-        </div>
+    <section class="section" id="budget">
+      <div class="section-label">Budget</div>
+      <h2>Estimated Costs (for both)</h2>
+
+      <div class="stats" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="stat"><div class="stat-value">~4L</div><div class="stat-label">Total (INR)</div></div>
+        <div class="stat"><div class="stat-value">1.2L</div><div class="stat-label">Flights (booked)</div></div>
+        <div class="stat"><div class="stat-value">1.1L</div><div class="stat-label">Hotels (15 nights)</div></div>
       </div>
 
-      <div class="table-wrapper">
+      <div class="table-wrap">
         <table>
           <thead>
-            <tr>
-              <th>Category</th>
-              <th>Estimated (INR)</th>
-              <th>Notes</th>
-            </tr>
+            <tr><th>Category</th><th>Estimated (INR)</th><th>Notes</th></tr>
           </thead>
           <tbody>
-            <tr><td>Flights (BLR-GZ-BLR)</td><td>1,20,000</td><td>Singapore Airlines — booked and confirmed</td></tr>
-            <tr><td>Hotels (15 nights)</td><td>1,10,000 - 1,25,000</td><td>Mid-range, Reddit-recommended areas</td></tr>
-            <tr><td>HSR Trains</td><td>45,000 - 52,000</td><td>All legs, 2nd class on Trip.com</td></tr>
-            <tr><td>Attractions</td><td>28,000 - 34,000</td><td>Pandas, rafting, parks, cable cars, Wulong</td></tr>
-            <tr><td>Food (16 days)</td><td>28,000 - 35,000</td><td>Street food + restaurants + hotpot</td></tr>
-            <tr><td>Local Transport</td><td>12,000 - 15,000</td><td>Didi, metro, park shuttles</td></tr>
-            <tr><td>Visa + SIM + Buffer</td><td>24,000 - 26,000</td><td>Everything else</td></tr>
+            <tr><td>Flights (BLR-GZ-BLR)</td><td>1,20,000</td><td>Singapore Airlines — booked</td></tr>
+            <tr><td>Hotels (15 nights)</td><td>1,10,000–1,25,000</td><td>Mid-range, Reddit-recommended</td></tr>
+            <tr><td>HSR Trains</td><td>45,000–52,000</td><td>All legs, 2nd class</td></tr>
+            <tr><td>Attractions</td><td>28,000–34,000</td><td>Pandas, rafting, parks, cable cars</td></tr>
+            <tr><td>Food (16 days)</td><td>28,000–35,000</td><td>Street food + restaurants + hotpot</td></tr>
+            <tr><td>Local Transport</td><td>12,000–15,000</td><td>Didi, metro, shuttles</td></tr>
+            <tr><td>Visa + SIM + Buffer</td><td>24,000–26,000</td><td>Everything else</td></tr>
           </tbody>
         </table>
       </div>
-    </div>
+    </section>
 
-    <div class="divider"></div>
+    <!-- FAQ -->
+    <section class="section">
+      <div class="section-label">FAQ</div>
+      <h2>Needhi Asks, Aman Answers</h2>
+      <p class="section-desc">Legitimate concerns met with questionable reassurance</p>
 
-    <!-- CLOSING CALLOUT -->
-    <div class="callout success" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(59, 130, 246, 0.15) 100%); border-left-color: var(--success);">
-      <div class="callout-title" style="font-size: 20px;">🎉 This is happening.</div>
-      <p style="font-size: 16px;">Flights booked. Hotels sorted. 16 days of ancient mountains wrapped in clouds, neon cities that look like sci-fi films, pandas being ridiculous, food that will ruin every other cuisine for us, and the two of us exploring a country that has to be seen to be believed.</p>
-      <p style="margin-top: 12px; color: var(--accent); font-weight: 600;">110 days to go. Let's make it count.</p>
-    </div>
+      <details class="faq-item">
+        <summary>Wait, neither of us speaks Mandarin?</summary>
+        <div class="faq-a">We speak fluent "pointing at menu items" and "showing Google Translate to confused taxi drivers." WeChat has a built-in translator, every restaurant has picture menus, and the HSR system has English signage. The only Mandarin we actually need is "méi yǒu là" (no spice) and "xǐshǒujiān zài nǎlǐ" (where's the bathroom). I've been practicing both in the mirror. The pronunciation is terrible but the desperation will be convincing.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>7 cities in 16 days — are we going to be exhausted?</summary>
+        <div class="faq-a">Here's the thing — China's HSR is not like Indian railways. Chengdu to Chongqing is 90 minutes. That's shorter than our commute on ORR during rain. We're not "traveling between cities," we're sitting in a comfy recliner watching countryside blur past at 350 km/h while eating cup noodles. The trains ARE the rest days. Also I've built in a full chill day in Guangzhou at the end specifically for the "my feet are filing for divorce" phase of the trip.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>No Google, no Instagram, no WhatsApp — how do we survive?</summary>
+        <div class="faq-a">VPN is pre-installed and tested. Offline Google Maps downloaded for every city. Hotel addresses saved in Chinese screenshots. But also — and hear me out — 16 days without doom-scrolling Instagram might be the most therapeutic part of this trip. We'll be too busy watching a monorail go through a building to miss Stories. Our parents get WeChat updates; everyone else can wait for the photo dump when we're back.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Can we hold a baby panda?</summary>
+        <div class="faq-a">They stopped allowing that in 2023. Apparently "letting tourists squeeze endangered animals" fell out of fashion. But you can stand close enough to watch baby pandas roll off a log, wrestle their siblings, and generally fail at being coordinated animals. It's like watching toddlers at a playground except they're globally endangered and covered in fur. Better content than a posed photo anyway — those videos go viral.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>I can barely handle Indian spicy — what about Sichuan food?</summary>
+        <div class="faq-a">Good news: Sichuan "spicy" is different from Indian "spicy." It's not just heat — it's this tingling numbing sensation called málà where your lips go electric. Think of it as your mouth getting a mild static shock that also tastes incredible. Every hotpot place has a split pot option: one side nuclear, one side mild broth. You control what goes in your bowl. Worst case we order the tomato base and nobody has to know.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>The glass skywalk — do I actually have to do that?</summary>
+        <div class="faq-a">You don't HAVE to. But you'll want to once you see it. It's 1,400 meters up, bolted to a cliff face, and the glass is rated for 800 people standing on it simultaneously. Structurally it's the safest path on the entire mountain. Psychologically it's an existential crisis in footwear. There are videos of grown men army-crawling across it while their girlfriends stroll casually. I have full confidence you'll be the one strolling and I'll be the one reconsidering my life choices.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>What if I don't like the food somewhere?</summary>
+        <div class="faq-a">We're crossing four distinct culinary regions. Cantonese dim sum is mild and delicate. Sichuan is the spicy one. Chongqing hotpot you control yourself. Yangshuo has beer fish and river shrimp. If all else fails — and I cannot stress this enough — there is a Luckin Coffee on every single block in every Chinese city. Also the bakeries are excellent and the fruit is absurdly cheap and fresh. You will not go hungry. The real problem will be eating too much.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>How much walking are we actually talking?</summary>
+        <div class="faq-a">My phone is going to report 15,000-20,000 steps on the big days. Jiuzhaigou and Zhangjiajie are the heavy ones but both have shuttle buses and elevators (a literal 326-meter glass elevator up a cliff). The city days are more like casual wandering with frequent dumpling stops. I've mapped every rest point, cable car, and shortcut. And if your feet stage a protest, Didi (Chinese Uber) is ¥15 to anywhere within a city. We're not proving anything to anyone.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>One carry-on for 16 days? Seriously?</summary>
+        <div class="faq-a">I'm not dragging a suitcase up 999 steps to Heaven's Gate. Here's the math: 5 outfits on rotation, laundry service at every hotel for ¥30, and China has a Miniso/convenience store within 200 meters of any point in any city. Forgot something? You can buy it. Anything we accumulate (tea, silk scarves, that DJI drone we "accidentally" buy in Shenzhen) gets shipped home or stuffed into a cheap bag for the flight back. Travel light, shop heavy.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>What's the plan if something goes wrong?</summary>
+        <div class="faq-a">Travel insurance covers medical and cancellations. Every hotel has an English-speaking front desk. I have offline copies of all bookings, passport scans, embassy numbers, and backup payment methods. But also — China is genuinely one of the safest countries to travel in. Violent crime is nearly nonexistent, public transport runs on the minute, hospitals are good, and worst case scenario the hotel can call us a car to anywhere. The most dangerous thing we'll do is try to cross a road in Chongqing where the GPS says you're on level 3 of a 5-level interchange.</div>
+      </details>
+    </section>
+
+    <!-- Closing -->
+    <section class="section" style="text-align: center; border-top: none; padding-top: 0;">
+      <div class="callout" style="text-align: left;">
+        <p><strong>This is happening.</strong> Flights booked. Hotels sorted. 16 days of ancient mountains in clouds, neon cities from sci-fi films, pandas being ridiculous, food that will ruin every other cuisine, and the two of us exploring a country that has to be seen to be believed.</p>
+      </div>
+    </section>
 
     <!-- Footer -->
-    <div class="footer" style="padding: 40px 0;">
-      <div style="font-size: 16px; margin-bottom: 8px;">🇨🇳</div>
-      <div style="font-size: 14px; color: var(--text-secondary);">Aman + Needhi — China, October 2026</div>
-      <div style="font-size: 12px; color: var(--text-tertiary); margin-top: 4px;">Made with ❤️ for an adventure of a lifetime</div>
-    </div>
-
+    <footer class="footer">
+      <p class="footer-text">Aman + Needhi · China, October 2026</p>
+    </footer>
   </div>
+
+  <script>
+    const html = document.documentElement;
+    const buttons = document.querySelectorAll('.theme-btn');
+
+    const saved = localStorage.getItem('theme');
+    if (saved) {
+      html.setAttribute('data-theme', saved);
+      buttons.forEach(b => b.classList.toggle('active', b.dataset.theme === saved));
+    }
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const theme = btn.dataset.theme;
+        html.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        buttons.forEach(b => b.classList.toggle('active', b.dataset.theme === theme));
+      });
+    });
+  </script>
 </body>
 </html>
-<!-- rebuild Sat Jun 27 03:45:06 IST 2026 -->
