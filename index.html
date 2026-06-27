@@ -81,19 +81,23 @@
       padding: 0 24px;
     }
 
-    /* Theme Toggle */
+    /* Theme Toggle — sits inside nav, pinned right */
+    .nav-wrapper {
+      display: flex;
+      align-items: center;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 16px 0 0;
+    }
+
     .theme-toggle {
-      position: fixed;
-      top: 14px;
-      right: 16px;
-      z-index: 200;
       display: flex;
       background: var(--bg-elevated);
       border: 1px solid var(--border);
       border-radius: 24px;
       padding: 3px;
       gap: 2px;
-      box-shadow: var(--shadow);
+      flex-shrink: 0;
     }
 
     .theme-btn {
@@ -131,13 +135,13 @@
     }
 
     .nav-inner {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 0 80px 0 24px;
       display: flex;
       gap: 4px;
       overflow-x: auto;
       scrollbar-width: none;
+      padding: 0 12px 0 24px;
+      flex: 1;
+      min-width: 0;
     }
 
     .nav-inner::-webkit-scrollbar { display: none; }
@@ -686,25 +690,25 @@
   </style>
 </head>
 <body>
-  <!-- Theme Toggle -->
-  <div class="theme-toggle">
-    <button class="theme-btn" data-theme="light" aria-label="Light mode">☀️</button>
-    <button class="theme-btn active" data-theme="dark" aria-label="Dark mode">🌙</button>
-  </div>
-
   <!-- Navigation -->
   <nav class="nav">
-    <div class="nav-inner">
-      <a href="#guangzhou" class="nav-link">Guangzhou</a>
-      <a href="#yangshuo" class="nav-link">Yangshuo</a>
-      <a href="#chengdu" class="nav-link">Chengdu</a>
-      <a href="#jiuzhaigou" class="nav-link">Jiuzhaigou</a>
-      <a href="#chongqing" class="nav-link">Chongqing</a>
-      <a href="#zhangjiajie" class="nav-link">Zhangjiajie</a>
-      <a href="#shenzhen" class="nav-link">Shenzhen</a>
-      <a href="#itinerary" class="nav-link">Itinerary</a>
-      <a href="#food" class="nav-link">Food</a>
-      <a href="#budget" class="nav-link">Budget</a>
+    <div class="nav-wrapper">
+      <div class="nav-inner">
+        <a href="#guangzhou" class="nav-link">Guangzhou</a>
+        <a href="#yangshuo" class="nav-link">Yangshuo</a>
+        <a href="#chengdu" class="nav-link">Chengdu</a>
+        <a href="#jiuzhaigou" class="nav-link">Jiuzhaigou</a>
+        <a href="#chongqing" class="nav-link">Chongqing</a>
+        <a href="#zhangjiajie" class="nav-link">Zhangjiajie</a>
+        <a href="#shenzhen" class="nav-link">Shenzhen</a>
+        <a href="#itinerary" class="nav-link">Itinerary</a>
+        <a href="#food" class="nav-link">Food</a>
+        <a href="#budget" class="nav-link">Budget</a>
+      </div>
+      <div class="theme-toggle">
+        <button class="theme-btn" data-theme="light" aria-label="Light mode">☀️</button>
+        <button class="theme-btn active" data-theme="dark" aria-label="Dark mode">🌙</button>
+      </div>
     </div>
   </nav>
 
