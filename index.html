@@ -83,14 +83,17 @@
 
     /* Theme Toggle */
     .theme-toggle {
+      position: fixed;
+      top: 14px;
+      right: 16px;
+      z-index: 200;
       display: flex;
       background: var(--bg-elevated);
       border: 1px solid var(--border);
       border-radius: 24px;
       padding: 3px;
       gap: 2px;
-      flex-shrink: 0;
-      margin-left: auto;
+      box-shadow: var(--shadow);
     }
 
     .theme-btn {
@@ -130,7 +133,7 @@
     .nav-inner {
       max-width: var(--max-w);
       margin: 0 auto;
-      padding: 0 24px;
+      padding: 0 80px 0 24px;
       display: flex;
       gap: 4px;
       overflow-x: auto;
@@ -683,6 +686,12 @@
   </style>
 </head>
 <body>
+  <!-- Theme Toggle -->
+  <div class="theme-toggle">
+    <button class="theme-btn" data-theme="light" aria-label="Light mode">☀️</button>
+    <button class="theme-btn active" data-theme="dark" aria-label="Dark mode">🌙</button>
+  </div>
+
   <!-- Navigation -->
   <nav class="nav">
     <div class="nav-inner">
@@ -696,11 +705,6 @@
       <a href="#itinerary" class="nav-link">Itinerary</a>
       <a href="#food" class="nav-link">Food</a>
       <a href="#budget" class="nav-link">Budget</a>
-      <!-- Theme Toggle -->
-      <div class="theme-toggle">
-        <button class="theme-btn" data-theme="light" aria-label="Light mode">☀️</button>
-        <button class="theme-btn active" data-theme="dark" aria-label="Dark mode">🌙</button>
-      </div>
     </div>
   </nav>
 
